@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+		<h:form>
+			<p:panelMenu style="width:210px">
+				
+				<p:submenu label="Cadastro" expanded="true" >
+					<p:menuitem value="Pagina Inicial" url="/home.faces" icon="ui-icon-home"/>
+			        <p:submenu label="Pessoa">
+			            <p:menuitem value="Pesquisar Pessoa" url="/pages/pessoa/pesquisarPessoa.faces" icon="ui-icon-search" />
+			            <p:menuitem value="Cadastrar Pessoa" url="/pages/pessoa/cadastrarPessoa.faces" icon="ui-icon-disk" />
+			        </p:submenu>
+			        <p:submenu label="Produto">
+			            <p:menuitem value="Pesquisar Produto" url="/pages/produto/pesquisarProduto.faces" icon="ui-icon-search" />
+			            <p:menuitem value="Cadastrar Produto" url="/pages/produto/cadastrarProduto.faces" icon="ui-icon-disk" />
+			        </p:submenu>
+			        <p:submenu label="Entrada">
+			            <p:menuitem value="Pesquisar Entrada" url="/pages/entrada/pesquisarEntrada.faces" icon="ui-icon-search" />
+			            <p:menuitem value="Cadastrar Entrada" url="/pages/entrada/cadastrarEntrada.faces" icon="ui-icon-disk" />
+			        </p:submenu>
+			    </p:submenu>
+		    </p:panelMenu>
+		</h:form>
+</html>

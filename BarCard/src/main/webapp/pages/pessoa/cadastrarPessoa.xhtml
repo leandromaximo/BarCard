@@ -1,0 +1,60 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="centro">
+
+		<div class="agrupadorTitulo">
+			<h1>Cadastrar Pessoa</h1>
+			<div class="full"></div>
+		</div>
+
+		<h:form>
+			<div class="rows">
+				<div class="space">
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Nome: *">
+									<p:inputText value="#{pessoaMB.pessoa.pessoaFisica.nome}"
+										size="40" />
+								</p:outputLabel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Cpf: *">
+									<p:inputMask mask="999.999.999-99"
+										value="#{pessoaMB.pessoa.pessoaFisica.cpf}" maxlength="11"
+										converter="cpfConverter" />
+								</p:outputLabel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Telefone: *">
+									<p:inputMask mask="(99)9999-9999"
+										value="#{pessoaMB.pessoa.telefone}" maxlength="10"
+										converter="telefoneConverter" />
+								</p:outputLabel>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</div>
+			</div>
+			<div class="rows">
+				<div class="space">
+					<p:panelGrid>
+						<p:column>
+							<p:commandButton value="Cadastrar" action="#{pessoaMB.salvar()}" />
+						</p:column>
+					</p:panelGrid>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

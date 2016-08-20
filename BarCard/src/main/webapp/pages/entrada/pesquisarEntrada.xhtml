@@ -1,0 +1,53 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="centro">
+
+		<div class="agrupadorTitulo">
+			<h1>Pesquisar Entradas</h1>
+			<div class="full"></div>
+		</div>
+
+		<h:form>
+			<div class="rows">
+				<div class="space">
+					<p:panelGrid >
+						<p:column>
+							<p:outputLabel value="Nome: ">
+								<p:inputText styleClass="obrigatorio" />
+							</p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:commandButton value="Buscar" />
+						</p:column>
+					</p:panelGrid>
+				</div>
+			</div>
+
+			<div class="divisor" />
+			
+			<p:panelGrid>
+				<p:dataTable value="#{entradaMB.lstEntrada}" var="entrada"
+					emptyMessage="Nenhum registro encontrado.">
+					<p:column headerText="Data da Entrada">
+						<h:outputText value="#{entrada.dtEntrada}" />
+					</p:column>
+					<p:column headerText="Nome">
+						<h:outputText value="#{entrada.produto.nome}" />
+					</p:column>
+					<p:column headerText="Valor do Custo">
+						<h:outputText value="#{entrada.vlCusto}" />
+					</p:column>
+					<p:column headerText="Quantidade">
+						<h:outputText value="#{entrada.quantidade}" />
+					</p:column>
+				</p:dataTable>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

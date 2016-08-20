@@ -1,0 +1,99 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="centro">
+		<h:form>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+		</h:form>
+		<div class="agrupadorTitulo">
+			<h1>Cadastrar Entrada</h1>
+			<div class="full"></div>
+		</div>
+
+		<h:form>
+			<div class="rows">
+				<div class="space">
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Selecionar Produto: *">
+									<p:outputLabel rendered="#{entradaMB.produto}!=null"
+										value="#{entradaMB.produto.nome}" />
+									<p:selectOneMenu value="#{entradaMB.produto}" converter="produtoConverter">
+							            <f:selectItem itemLabel="Selecione..." itemValue="" />
+							            <f:selectItems value="#{entradaMB.lstProduto}" var="p" itemLabel="#{p.nome}"/>
+							        </p:selectOneMenu>
+									<!-- p:commandLink value="Selecione..."
+										onclick="PF('selelecionaProduto').show()" / -->
+										
+								</p:outputLabel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Quantidade: *">
+									<pe:inputNumber value="#{entradaMB.entrada.quantidade}"
+										decimalSeparator="," maxValue="99999.999" minValue="0.001"
+										thousandSeparator="." />
+								</p:outputLabel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Valor de venda: *">
+									<pe:inputNumber value="#{entradaMB.entrada.vlCusto}"
+										symbol="R$ " symbolPosition="p" decimalSeparator=","
+										maxValue="9999.99" minValue="0.00" thousandSeparator="." />
+								</p:outputLabel>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</div>
+			</div>
+			<div class="rows">
+				<div class="space">
+					<p:panelGrid>
+						<p:column>
+							<p:commandButton value="Cadastrar" action="#{entradaMB.salvar()}"
+								update="@form" />
+						</p:column>
+					</p:panelGrid>
+				</div>
+			</div>
+
+			<!-- p:dialog header="Selecionar Produto" modal="true"
+				widgetVar="selelecionaProduto" appendTo="@(body)">
+				<p:panelGrid>
+					<p:dataTable value="#{entradaMB.lstProduto}" var="produto"
+						emptyMessage="Nenhum registro encontrado." paginator="true"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rows="10" rowsPerPageTemplate="5,10,15">
+						<p:column headerText="Nome do Produto">
+							<h:outputText value="#{produto.nome}" />
+						</p:column>
+						<p:column headerText="Descrição">
+							<h:outputText value="#{produto.descricao}" />
+						</p:column>
+						<p:column headerText="Valor">
+							<h:outputText value="#{produto.vlVenda}" />
+						</p:column>
+						<p:column >
+							<p:commandLink value="Teste" ajax="false"
+								oncomplete="PF('selelecionaProduto').hide()" >
+								<f:setPropertyActionListener value="#{produto}" target="#{entradaMB.produto}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</p:panelGrid>
+			</p:dialog -->
+
+		</h:form>
+	</ui:define>
+</ui:composition>

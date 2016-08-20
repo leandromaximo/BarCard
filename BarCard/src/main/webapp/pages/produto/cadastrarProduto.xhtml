@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="centro">
+		<h:form>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+		</h:form>
+		<div class="agrupadorTitulo">
+			<h1>Cadastrar Produto</h1>
+			<div class="full"></div>
+		</div>
+
+		<h:form>
+			<div class="rows">
+				<div class="space">
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Nome: *">
+									<p:inputText value="#{produtoMB.produto.nome}" size="40"/>
+								</p:outputLabel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Descrição: ">
+									<p:inputTextarea value="#{produtoMB.produto.descricao}" rows="4" cols="40"/>
+								</p:outputLabel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Valor de venda: *">
+									<pe:inputNumber value="#{produtoMB.produto.vlVenda}"
+										symbol="R$ " symbolPosition="p" decimalSeparator=","
+										maxValue="9999.99" minValue="0.00" thousandSeparator="." />
+								</p:outputLabel>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</div>
+			</div>
+			<div class="rows">
+				<div class="space">
+					<p:panelGrid>
+						<p:column>
+							<p:commandButton value="Cadastrar" action="#{produtoMB.salvar()}"
+								update="@form" />
+						</p:column>
+					</p:panelGrid>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

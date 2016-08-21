@@ -7,11 +7,14 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.barcard.entity.Entrada;
 import br.com.barcard.entity.Produto;
+import br.com.barcard.service.EntradaService;
 import br.com.barcard.service.ProdutoService;
 
 @Named
@@ -26,8 +29,12 @@ public class ProdutoMB implements Serializable {
 	@Inject 
 	ProdutoService produtoService;
 	
+	@Inject 
+	EntradaService entradaService;
+	
 	Collection<Produto> lstProduto = new ArrayList<Produto>();
 	Produto produto = new Produto();
+	Entrada entrada = new Entrada();
 	
 	@PostConstruct
 	public void init(){
@@ -52,6 +59,14 @@ public class ProdutoMB implements Serializable {
 		produtoService.salvar(produto);
 		return "pesquisarProduto?faces-redirect=true";
 	}
+	
+	public String salvarEntrada(){
+		if(produto!=null && produto.getId()!=null){
+			entrada.setProduto(produto);
+			entradaService.salvar(entrada);
+		}
+		return "pesquisarProduto?faces-redirect=true";
+	}
 
 	public Conversation getConversation() {
 		return conversation;
@@ -71,6 +86,14 @@ public class ProdutoMB implements Serializable {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public Entrada getEntrada() {
+		return entrada;
+	}
+
+	public void setEntrada(Entrada entrada) {
+		this.entrada = entrada;
 	}
 	
 }

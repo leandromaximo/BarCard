@@ -4,6 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="centro">
@@ -16,7 +17,7 @@
 		<h:form>
 			<div class="rows">
 				<div class="space">
-					<p:panelGrid >
+					<p:panelGrid>
 						<p:column>
 							<p:outputLabel value="Nome: ">
 								<p:inputText styleClass="obrigatorio" />
@@ -30,7 +31,7 @@
 			</div>
 
 			<div class="divisor" />
-			
+
 			<p:panelGrid>
 				<p:dataTable value="#{produtoMB.lstProduto}" var="produto"
 					emptyMessage="Nenhum registro encontrado.">
@@ -43,8 +44,51 @@
 					<p:column headerText="Valor">
 						<h:outputText value="#{produto.vlVenda}" />
 					</p:column>
+					<p:column headerText="Ações">
+						<p:commandLink value="Adicionar"
+							oncomplete="PF('adicionaProduto').show()" >
+							<f:setPropertyActionListener value="#{produto}"
+								target="#{produtoMB.produto}" />
+						</p:commandLink>
+					</p:column>
 				</p:dataTable>
 			</p:panelGrid>
 		</h:form>
+		
+		<p:dialog header="Adicionar Produto" modal="true"
+			widgetVar="adicionaProduto" appendTo="@(body)">
+			<h:form>
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Quantidade: *">
+								<pe:inputNumber value="#{produtoMB.entrada.quantidade}"
+									decimalSeparator="," maxValue="99999.999" minValue="0.001"
+									thousandSeparator="." />
+							</p:outputLabel>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Valor de venda: *">
+								<pe:inputNumber value="#{produtoMB.entrada.vlCusto}"
+									symbol="R$ " symbolPosition="p" decimalSeparator=","
+									maxValue="9999.99" minValue="0.00" thousandSeparator="." />
+							</p:outputLabel>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<div class="rows">
+					<div class="space">
+						<p:panelGrid>
+							<p:column>
+								<p:commandButton value="Cadastrar"
+									action="#{produtoMB.salvarEntrada()}" />
+							</p:column>
+						</p:panelGrid>
+					</div>
+				</div>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>

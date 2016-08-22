@@ -1,22 +1,20 @@
 package br.com.barcard.converter;
 
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 
 import org.hibernate.service.spi.ServiceException;
 
+import br.com.barcard.dao.ProdutoDAO;
 import br.com.barcard.entity.Produto;
-import br.com.barcard.service.ProdutoService;
 import br.com.barcard.util.SystemUtil;
 
 @FacesConverter(value = "produtoConverter")
 public class ProdutoConverter implements Converter {
 	
-	@Inject
-    ProdutoService produtoService;
  
     @Override  
     public Object getAsObject(FacesContext context, UIComponent component, String value)  {  
@@ -25,7 +23,8 @@ public class ProdutoConverter implements Converter {
              return retorno;  
          } else {  
              try {
-//				retorno = (Produto) produtoService.buscarPorId(value);
+            	ProdutoDAO produtoDAO = CDI.current().select(ProdutoDAO.class).get();
+				retorno = (Produto) produtoDAO.find(Produto.class ,value);
 			} catch (ServiceException e) {
 				System.out.println(e.getMessage());
 			}

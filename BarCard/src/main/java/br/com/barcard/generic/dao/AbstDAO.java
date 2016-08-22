@@ -15,7 +15,7 @@ public abstract class AbstDAO<E> implements ItfCrudDAO{
 	
 	@Inject
 	protected EntityManager entityManager;
-
+	
 	public EntityManager getEntityManager(){
 		return entityManager;
 	}

@@ -3,6 +3,7 @@ package br.com.barcard.mb;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
@@ -47,11 +48,10 @@ public class ProdutoMB implements Serializable {
 		}
 	}
 	
-	public String endConversation(){
+	public void endConversation(){
 		if(!conversation.isTransient()){
 			conversation.end();
 		}
-		return "home?faces-redirect=true";
 	}
 	
 	public String salvar(){
@@ -62,8 +62,10 @@ public class ProdutoMB implements Serializable {
 	public String salvarEntrada(){
 		if(produto!=null && produto.getId()!=null){
 			entrada.setProduto(produto);
+			entrada.setDtEntrada(new Date());
 			entradaService.salvar(entrada);
 		}
+		endConversation();
 		return "pesquisarProduto?faces-redirect=true";
 	}
 

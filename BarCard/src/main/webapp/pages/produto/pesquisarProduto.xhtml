@@ -8,7 +8,9 @@
 	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="centro">
-
+		<!-- INICIALIZA A CONVERSACAO -->
+		<f:event listener="#{produtoMB.initConversation()}" type="preRenderView" />
+		
 		<div class="agrupadorTitulo">
 			<h1>Pesquisar Produtos</h1>
 			<div class="full"></div>
@@ -46,6 +48,7 @@
 					</p:column>
 					<p:column headerText="Ações">
 						<p:commandLink value="Adicionar"
+						 	update=":addProdModal"
 							oncomplete="PF('adicionaProduto').show()" >
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{produtoMB.produto}" />
@@ -55,7 +58,7 @@
 			</p:panelGrid>
 		</h:form>
 		
-		<p:dialog header="Adicionar Produto" modal="true"
+		<p:dialog id="addProdModal" header="Adicionar Produto #{produtoMB.produto.nome}" modal="true"
 			widgetVar="adicionaProduto" appendTo="@(body)">
 			<h:form>
 				<p:panelGrid>

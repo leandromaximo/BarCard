@@ -56,7 +56,7 @@ public class ProdutoMB  extends GenericMB {
 	
 	public String salvar(){
 		produtoService.salvar(produto);
-		return "pesquisarProduto?faces-redirect=true";
+		return goTo("pesquisarProduto");
 	}
 	
 	public String salvarEntrada(){
@@ -67,7 +67,7 @@ public class ProdutoMB  extends GenericMB {
 		}
 		endConversation();
 		addMessageInfo("cadastrado!");
-		return "pesquisarProduto?faces-redirect=true";
+		return goTo("pesquisarProduto");
 	}
 
 	public Conversation getConversation() {

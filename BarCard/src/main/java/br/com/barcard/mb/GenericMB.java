@@ -11,6 +11,10 @@ public abstract class GenericMB implements Serializable{
 	
 	public abstract void endConversation();
 
+	public String goTo(String msg){
+		return msg+"?faces-redirect=true";
+	}
+	
 	public void addMessageInfo(String msg){
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.getExternalContext().getFlash().setKeepMessages(true);

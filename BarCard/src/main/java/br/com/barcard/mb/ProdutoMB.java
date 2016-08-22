@@ -19,7 +19,7 @@ import br.com.barcard.service.ProdutoService;
 
 @Named
 @ConversationScoped
-public class ProdutoMB implements Serializable {
+public class ProdutoMB  extends GenericMB {
 
 	private static final long serialVersionUID = 4771270804699990999L;
 	
@@ -66,6 +66,7 @@ public class ProdutoMB implements Serializable {
 			entradaService.salvar(entrada);
 		}
 		endConversation();
+		addMessageInfo("cadastrado!");
 		return "pesquisarProduto?faces-redirect=true";
 	}
 

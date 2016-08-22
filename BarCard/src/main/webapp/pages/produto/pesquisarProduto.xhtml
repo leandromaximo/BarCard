@@ -16,7 +16,9 @@
 			<div class="full"></div>
 		</div>
 
-		<h:form>
+		<h:form id="idForm">
+			<p:growl id="messages"/>
+			
 			<div class="rows">
 				<div class="space">
 					<p:panelGrid>
@@ -86,7 +88,7 @@
 						<p:panelGrid>
 							<p:column>
 								<p:commandButton value="Cadastrar"
-									action="#{produtoMB.salvarEntrada()}" />
+									action="#{produtoMB.salvarEntrada()}" update=":idForm:messages" />
 							</p:column>
 						</p:panelGrid>
 					</div>

@@ -13,14 +13,14 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.barcard.entity.Entrada;
 import br.com.barcard.entity.Produto;
-import br.com.barcard.service.EntradaService;
+import br.com.barcard.entity.Saida;
 import br.com.barcard.service.ProdutoService;
+import br.com.barcard.service.SaidaService;
 
 @Named
 @ConversationScoped
-public class EntradaMB implements Serializable {
+public class SaidaMB implements Serializable {
 
 	private static final long serialVersionUID = 4771270804699990999L;
 	
@@ -28,18 +28,18 @@ public class EntradaMB implements Serializable {
     private Conversation conversation;
 	
 	@Inject 
-	EntradaService entradaService;
+	SaidaService saidaService;
 	
-	@Inject 
+	@Inject
 	ProdutoService produtoService;
 	
-	Collection<Entrada> lstEntrada = new ArrayList<Entrada>();
-	Entrada entrada = new Entrada();
+	Collection<Saida> lstSaida = new ArrayList<Saida>();
+	Saida saida = new Saida();
 	Collection<Produto> lstProduto = new ArrayList<Produto>();
 	
 	@PostConstruct
 	public void init(){
-		lstEntrada  = entradaService.outraRegraDeNegocioEspecificaBuscar(null);
+		lstSaida  = saidaService.outraRegraDeNegocioEspecificaBuscar(null);
 		lstProduto  = produtoService.outraRegraDeNegocioEspecificaBuscar(null);
 	}
 	
@@ -58,10 +58,11 @@ public class EntradaMB implements Serializable {
 	}
 	
 	public String salvar(){
-		if(entrada.getProduto()!=null && entrada.getProduto().getId()!=null){
-			entrada.setDtEntrada(new Date());
-			entradaService.salvar(entrada);
-			return "pesquisarEntrada?faces-redirect=true";
+		if(saida.getProduto()!=null && saida.getProduto().getId()!=null){
+			saida.setDtSaida(new Date());
+			saida.setVlVenda(saida.getProduto().getVlVenda());
+			saidaService.salvar(saida);
+			return "pesquisarVenda?faces-redirect=true";
 		}else{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Selecione um produto."));
 			return null;
@@ -72,20 +73,20 @@ public class EntradaMB implements Serializable {
 		return conversation;
 	}
 
-	public Collection<Entrada> getLstEntrada() {
-		return lstEntrada;
+	public Collection<Saida> getLstSaida() {
+		return lstSaida;
 	}
 
-	public void setLstEntrada(Collection<Entrada> lstEntrada) {
-		this.lstEntrada = lstEntrada;
+	public void setLstSaida(Collection<Saida> lstSaida) {
+		this.lstSaida = lstSaida;
 	}
 
-	public Entrada getEntrada() {
-		return entrada;
+	public Saida getSaida() {
+		return saida;
 	}
 
-	public void setEntrada(Entrada entrada) {
-		this.entrada = entrada;
+	public void setSaida(Saida saida) {
+		this.saida = saida;
 	}
 
 	public Collection<Produto> getLstProduto() {

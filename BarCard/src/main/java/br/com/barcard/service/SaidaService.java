@@ -4,48 +4,49 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-import br.com.barcard.dao.EntradaDAO;
-import br.com.barcard.entity.Entrada;
+import br.com.barcard.dao.SaidaDAO;
+import br.com.barcard.entity.Produto;
+import br.com.barcard.entity.Saida;
 import br.com.barcard.generic.service.AbstService;
 
-public class EntradaService extends AbstService{
+public class SaidaService extends AbstService{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	EntradaDAO entradaDAO;
+	SaidaDAO saidaDAO;
 	
-	public void regraDeNegocioAqui(Entrada e) {
+	public void regraDeNegocioAqui(Saida e) {
 		//regraDeNegocioAqui
 		try {
-			entradaDAO.incluir(e);
+			saidaDAO.incluir(e);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 	
-	public void salvar(Entrada e) {
+	public void salvar(Saida e) {
 		try {
-			entradaDAO.incluir(e);
+			saidaDAO.incluir(e);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 	
 	
-	public Collection<Entrada> regraDeNegocioBuscar(Entrada e) {
+	public Collection<Saida> regraDeNegocioBuscar(Saida e) {
 		//regraDeNegocioAqui
 		try {
-			return entradaDAO.findAll(Entrada.class);
+			return saidaDAO.findAll(Saida.class);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return null;
 	}
 	
-	public Collection<Entrada> outraRegraDeNegocioEspecificaBuscar(Entrada e) {
+	public Collection<Saida> outraRegraDeNegocioEspecificaBuscar(Saida e) {
 		//regraDeNegocioAqui
-		return entradaDAO.aquiUmaQuerieEspecifica("",null);
+		return saidaDAO.aquiUmaQuerieEspecifica("",null);
 	}
 	
 }

@@ -13,7 +13,7 @@
 				closable="true" />
 		</h:form>
 		<div class="agrupadorTitulo">
-			<h1>Cadastrar Entrada</h1>
+			<h1>Cadastrar Venda</h1>
 			<div class="full"></div>
 		</div>
 
@@ -24,11 +24,11 @@
 						<p:row>
 							<p:column>
 								<p:outputLabel value="Selecionar Produto: *">
-									<p:outputLabel rendered="#{entradaMB.entrada.produto}!=null"
-										value="#{entradaMB.entrada.produto.nome}" />
-									<p:selectOneMenu value="#{entradaMB.entrada.produto}" converter="produtoConverter">
+									<p:outputLabel rendered="#{saidaMB.saida.produto}!=null"
+										value="#{saidaMB.saida.produto.nome}" />
+									<p:selectOneMenu value="#{saidaMB.saida.produto}" converter="produtoConverter">
 							            <f:selectItem itemLabel="Selecione..." itemValue="" />
-							            <f:selectItems value="#{entradaMB.lstProduto}" var="p" itemLabel="#{p.nome}"/>
+							            <f:selectItems value="#{saidaMB.lstProduto}" var="p" itemLabel="#{p.nome}"/>
 							        </p:selectOneMenu>
 									<!-- p:commandLink value="Selecione..."
 										onclick="PF('selelecionaProduto').show()" / -->
@@ -38,18 +38,9 @@
 						<p:row>
 							<p:column>
 								<p:outputLabel value="Quantidade: *">
-									<pe:inputNumber value="#{entradaMB.entrada.quantidade}"
+									<pe:inputNumber value="#{saidaMB.saida.qntSaida}"
 										decimalSeparator="," maxValue="99999.999" minValue="0.001"
 										thousandSeparator="." />
-								</p:outputLabel>
-							</p:column>
-						</p:row>
-						<p:row>
-							<p:column>
-								<p:outputLabel value="Valor de venda: *">
-									<pe:inputNumber value="#{entradaMB.entrada.vlCusto}"
-										symbol="R$ " symbolPosition="p" decimalSeparator=","
-										maxValue="9999.99" minValue="0.00" thousandSeparator="." />
 								</p:outputLabel>
 							</p:column>
 						</p:row>
@@ -60,7 +51,7 @@
 				<div class="space">
 					<p:panelGrid>
 						<p:column>
-							<p:commandButton value="Cadastrar" action="#{entradaMB.salvar()}"
+							<p:commandButton value="Cadastrar" action="#{saidaMB.salvar()}"
 								update="@form" />
 						</p:column>
 					</p:panelGrid>
@@ -70,7 +61,7 @@
 			<!-- p:dialog header="Selecionar Produto" modal="true"
 				widgetVar="selelecionaProduto" appendTo="@(body)">
 				<p:panelGrid>
-					<p:dataTable value="#{entradaMB.lstProduto}" var="produto"
+					<p:dataTable value="#{saidaMB.lstProduto}" var="produto"
 						emptyMessage="Nenhum registro encontrado." paginator="true"
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rows="10" rowsPerPageTemplate="5,10,15">
@@ -86,7 +77,7 @@
 						<p:column >
 							<p:commandLink value="Teste" ajax="false"
 								oncomplete="PF('selelecionaProduto').hide()" >
-								<f:setPropertyActionListener value="#{produto}" target="#{entradaMB.entrada.produto}" />
+								<f:setPropertyActionListener value="#{produto}" target="#{saidaMB.saida.produto}" />
 							</p:commandLink>
 						</p:column>
 					</p:dataTable>

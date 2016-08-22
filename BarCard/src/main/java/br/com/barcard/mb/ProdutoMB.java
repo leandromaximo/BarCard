@@ -55,13 +55,27 @@ public class ProdutoMB  extends GenericMB {
 	}
 	
 	public String salvar(){
-		produtoService.salvar(produto);
+		if(produto!=null && produto.getId()==null){
+			produtoService.salvar(produto);
+		}else{
+			produtoService.alterar(produto);
+		}
+		endConversation();
 		return goTo("pesquisarProduto");
 	}
 	
+	public String editar(){
+		return "cadastrarProduto?faces-redirect=true";
+	}
+	
+	public String excluir(){
+		produtoService.excluir(produto);
+		endConversation();
+		return "pesquisarProduto?faces-redirect=true";
+	}
+	
 	public String salvarEntrada(){
-		if(produto!=null && produto.getId()!=null){
-			entrada.setProduto(produto);
+		if(entrada.getProduto()!=null && entrada.getProduto().getId()!=null){
 			entrada.setDtEntrada(new Date());
 			entradaService.salvar(entrada);
 		}

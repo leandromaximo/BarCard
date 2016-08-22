@@ -32,6 +32,22 @@ public class ProdutoService extends AbstService{
 		}
 	}
 	
+	public void alterar(Produto p) {
+		try {
+			produtoDAO.alterar(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void excluir(Produto p) {
+		try {
+			produtoDAO.excluir(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public Collection<Produto> regraDeNegocioBuscar(Produto p) {
 		//regraDeNegocioAqui

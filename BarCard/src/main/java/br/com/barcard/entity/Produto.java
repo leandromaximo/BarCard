@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -52,6 +53,9 @@ public class Produto implements ItfEntidade{
 	@Cascade(CascadeType.ALL)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto")
 	private List<Saida> lstSaida;
+	
+	@Transient
+	private BigDecimal qntEstoque;
 	
 	public Produto(){
 		
@@ -104,5 +108,19 @@ public class Produto implements ItfEntidade{
 	public void setLstSaida(List<Saida> lstSaida) {
 		this.lstSaida = lstSaida;
 	}
-	
+
+	public BigDecimal getQntEstoque() {
+		BigDecimal vlTot = BigDecimal.ZERO;
+		BigDecimal vlEntrada = BigDecimal.ZERO;
+		BigDecimal vlSaida = BigDecimal.ZERO;
+		for (Entrada entrada : lstEntrada) {
+			vlEntrada = entrada.getQuantidade().add(vlEntrada);
+		}
+		for (Saida saida : lstSaida) {
+			vlSaida = saida.getQntSaida().add(vlSaida);
+		}
+		vlTot = vlEntrada.subtract(vlSaida);
+		return vlTot;
+	}
+
 }

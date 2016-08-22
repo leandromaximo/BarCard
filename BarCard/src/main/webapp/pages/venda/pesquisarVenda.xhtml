@@ -9,7 +9,7 @@
 	<ui:define name="centro">
 
 		<div class="agrupadorTitulo">
-			<h1>Pesquisar Entradas</h1>
+			<h1>Pesquisar Vendas</h1>
 			<div class="full"></div>
 		</div>
 
@@ -32,21 +32,21 @@
 			<div class="divisor" />
 			
 			<p:panelGrid>
-				<p:dataTable value="#{entradaMB.lstEntrada}" var="entrada"
+				<p:dataTable value="#{saidaMB.lstSaida}" var="saida"
 					emptyMessage="Nenhum registro encontrado.">
-					<p:column headerText="Data da Entrada">
-						<h:outputText value="#{entrada.dtEntrada}" >
+					<p:column headerText="Data da Venda">
+						<h:outputText value="#{saida.dtSaida}" >
 							<f:convertDateTime pattern="dd/MM/YY - HH:mm" />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Nome">
-						<h:outputText value="#{entrada.produto.nome}" />
+						<h:outputText value="#{saida.produto.nome}" />
 					</p:column>
-					<p:column headerText="Valor do Custo">
-						<h:outputText value="#{entrada.vlCusto}" />
+					<p:column headerText="Valor">
+						<h:outputText value="#{saida.vlVenda}" />
 					</p:column>
 					<p:column headerText="Quantidade">
-						<h:outputText value="#{entrada.quantidade}" />
+						<h:outputText value="#{saida.qntSaida}" />
 					</p:column>
 				</p:dataTable>
 			</p:panelGrid>

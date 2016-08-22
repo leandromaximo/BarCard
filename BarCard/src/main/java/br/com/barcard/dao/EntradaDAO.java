@@ -5,7 +5,6 @@ import java.util.Collection;
 import javax.persistence.Query;
 
 import br.com.barcard.entity.Entrada;
-import br.com.barcard.entity.Produto;
 import br.com.barcard.generic.dao.AbstDAO;
 
 public class EntradaDAO extends AbstDAO	{
@@ -26,17 +25,4 @@ public class EntradaDAO extends AbstDAO	{
 		return null;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Collection<Produto> buscarProduto(String propriedade,Object valor){
-		try {
-			StringBuilder sql = new StringBuilder("from Produto");
-
-			Query q = getEntityManager().createQuery(sql.toString());
-
-			return q.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 }

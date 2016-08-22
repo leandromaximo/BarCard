@@ -14,11 +14,11 @@
 		<div class="agrupadorTitulo">
 			<h1>Pesquisar Produtos</h1>
 			<div class="full"></div>
+			<p:commandButton value="Novo" style="left: 93%; background-color: #32CD32;"/>
 		</div>
 
 		<h:form id="idForm">
 			<p:growl id="messages"/>
-			
 			<div class="rows">
 				<div class="space">
 					<p:panelGrid>
@@ -28,7 +28,7 @@
 							</p:outputLabel>
 						</p:column>
 						<p:column>
-							<p:commandButton value="Buscar" />
+							<p:commandButton value="Buscar" style="background-color: #6495ED;"/>
 						</p:column>
 					</p:panelGrid>
 				</div>
@@ -48,10 +48,25 @@
 					<p:column headerText="Valor">
 						<h:outputText value="#{produto.vlVenda}" />
 					</p:column>
+					<p:column headerText="Estoque">
+						<h:outputText value="#{produto.qntEstoque}" />
+					</p:column>
 					<p:column headerText="Ações">
-						<p:commandLink value="Adicionar"
-						 	update=":addProdModal"
+						<p:commandLink styleClass="ui-icon ui-icon-pencil"
+						 	title="Editar Produto"
+							action="#{produtoMB.editar()}" >
+							<f:setPropertyActionListener value="#{produto}"
+								target="#{produtoMB.produto}" />
+						</p:commandLink>
+						<p:commandLink styleClass="ui-icon ui-icon-plusthick"
+						 	update=":addProdModal" title="Adicionar Produto"
 							oncomplete="PF('adicionaProduto').show()" >
+							<f:setPropertyActionListener value="#{produto}"
+								target="#{produtoMB.entrada.produto}" />
+						</p:commandLink>
+						<p:commandLink styleClass="ui-icon ui-icon-close"
+						 	title="Excluir Produto"
+							action="#{produtoMB.excluir()}" >
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{produtoMB.produto}" />
 						</p:commandLink>
@@ -60,7 +75,7 @@
 			</p:panelGrid>
 		</h:form>
 		
-		<p:dialog id="addProdModal" header="Adicionar Produto #{produtoMB.produto.nome}" modal="true"
+		<p:dialog id="addProdModal" header="Adicionar Produto #{produtoMB.entrada.produto.nome}" modal="true"
 			widgetVar="adicionaProduto" appendTo="@(body)">
 			<h:form>
 				<p:panelGrid>
@@ -88,7 +103,7 @@
 						<p:panelGrid>
 							<p:column>
 								<p:commandButton value="Cadastrar"
-									action="#{produtoMB.salvarEntrada()}" update=":idForm:messages" />
+									action="#{produtoMB.salvarEntrada()}" />
 							</p:column>
 						</p:panelGrid>
 					</div>

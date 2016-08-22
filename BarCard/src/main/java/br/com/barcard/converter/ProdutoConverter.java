@@ -24,7 +24,7 @@ public class ProdutoConverter implements Converter {
          } else {  
              try {
             	ProdutoDAO produtoDAO = CDI.current().select(ProdutoDAO.class).get();
-				retorno = (Produto) produtoDAO.find(Produto.class ,value);
+				retorno = (Produto) produtoDAO.find(Produto.class ,new Long(value));
 			} catch (ServiceException e) {
 				System.out.println(e.getMessage());
 			}

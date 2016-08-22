@@ -52,7 +52,7 @@ public class PessoaMB implements Serializable {
 		pessoaService.salvar(pessoa);
 		return "pesquisarPessoa?faces-redirect=true";
 	}
-
+	
 	public Conversation getConversation() {
 		return conversation;
 	}

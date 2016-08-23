@@ -1,6 +1,5 @@
 package br.com.barcard.mb;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -20,7 +19,7 @@ import br.com.barcard.service.ProdutoService;
 
 @Named
 @ConversationScoped
-public class EntradaMB implements Serializable {
+public class EntradaMB extends GenericMB {
 
 	private static final long serialVersionUID = 4771270804699990999L;
 	
@@ -33,9 +32,10 @@ public class EntradaMB implements Serializable {
 	@Inject 
 	ProdutoService produtoService;
 	
-	Collection<Entrada> lstEntrada = new ArrayList<Entrada>();
-	Entrada entrada = new Entrada();
-	Collection<Produto> lstProduto = new ArrayList<Produto>();
+	private Collection<Entrada> lstEntrada = new ArrayList<Entrada>();
+	private Entrada entrada = new Entrada();
+	private Collection<Produto> lstProduto = new ArrayList<Produto>();
+	private String nomeProd = new String();
 	
 	@PostConstruct
 	public void init(){
@@ -45,27 +45,37 @@ public class EntradaMB implements Serializable {
 	
 	public void initConversation(){
 		if (!FacesContext.getCurrentInstance().isPostback() 
-			&& conversation.isTransient()) {
-			conversation.begin();
+				&& conversation.isTransient()) {
+				conversation.begin();
 		}
 	}
 	
-	public String endConversation(){
+	public void endConversation(){
 		if(!conversation.isTransient()){
 			conversation.end();
 		}
-		return "home?faces-redirect=true";
 	}
 	
 	public String salvar(){
 		if(entrada.getProduto()!=null && entrada.getProduto().getId()!=null){
 			entrada.setDtEntrada(new Date());
-			entradaService.salvar(entrada);
-			return "pesquisarEntrada?faces-redirect=true";
+			if(entrada!=null && entrada.getId()==null){
+				entradaService.salvar(entrada);
+			}else{
+				entradaService.alterar(entrada);
+			}
+			endConversation();
+			return goTo("pesquisarEntrada");
 		}else{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Selecione um produto."));
 			return null;
 		}
+	}
+	
+	public String excluir(){
+		entradaService.excluir(entrada);
+		endConversation();
+		return goTo("pesquisarEntrada");
 	}
 	
 	public Conversation getConversation() {
@@ -94,6 +104,14 @@ public class EntradaMB implements Serializable {
 
 	public void setLstProduto(Collection<Produto> lstProduto) {
 		this.lstProduto = lstProduto;
+	}
+
+	public String getNomeProd() {
+		return nomeProd;
+	}
+
+	public void setNomeProd(String nomeProd) {
+		this.nomeProd = nomeProd;
 	}
 	
 }

@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import br.com.barcard.entity.Produto;
 import br.com.barcard.generic.dao.AbstDAO;
 
-public class ProdutoDAO extends AbstDAO	{
+public class ProdutoDAO extends AbstDAO<Produto>	{
 
 	private static final long serialVersionUID = 1L;
 

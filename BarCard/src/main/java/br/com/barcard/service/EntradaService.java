@@ -32,6 +32,21 @@ public class EntradaService extends AbstService{
 		}
 	}
 	
+	public void excluir(Entrada e) {
+		try {
+			entradaDAO.excluir(e);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public void alterar(Entrada e) {
+		try {
+			entradaDAO.saveOrUpdate(e);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 	
 	public Collection<Entrada> regraDeNegocioBuscar(Entrada e) {
 		//regraDeNegocioAqui

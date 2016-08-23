@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.hibernate.criterion.Order;
 
@@ -45,28 +46,28 @@ public abstract class AbstDAO<E> implements ItfCrudDAO{
 		return entityManager.createQuery("from "+entityClass.getSimpleName() + " order by "+orderBy.toString()).getResultList();
 	}
 	
-//	public Collection<T> findAllByProperty(String propriedade,Object valor){
-//		StringBuilder sql = new StringBuilder("from ")
-//		.append(entityClass.getSimpleName())
-//		.append(" where ")
-//		.append(propriedade)
-//		.append(" = :valor");
-//		Query q = entityManager.createQuery(sql.toString());
-//		q.setParameter("valor", valor);
-//		return q.getResultList();
-//	}
-//	
-//	public Collection<T> findAllByProperty(String propriedade,Object valor,Order orderBy){
-//		StringBuilder sql = new StringBuilder("from ")
-//		.append(entityClass.getSimpleName())
-//		.append(" where ")
-//		.append(propriedade)
-//		.append(" = :valor ")
-//		.append("order by " + orderBy.toString());
-//		Query q = entityManager.createQuery(sql.toString());
-//		q.setParameter("valor", valor);
-//		return q.getResultList();
-//	}
+	public Collection<E> findAllByProperty(Class<E> entityClass,String propriedade,Object valor){
+		StringBuilder sql = new StringBuilder("from ")
+		.append(entityClass.getSimpleName())
+		.append(" where ")
+		.append(propriedade)
+		.append(" = :valor");
+		Query q = entityManager.createQuery(sql.toString());
+		q.setParameter("valor", valor);
+		return q.getResultList();
+	}
+	
+	public Collection<E> findAllByProperty(Class<E> entityClass,String propriedade,Object valor,Order orderBy){
+		StringBuilder sql = new StringBuilder("from ")
+		.append(entityClass.getSimpleName())
+		.append(" where ")
+		.append(propriedade)
+		.append(" = :valor ")
+		.append("order by " + orderBy.toString());
+		Query q = entityManager.createQuery(sql.toString());
+		q.setParameter("valor", valor);
+		return q.getResultList();
+	}
 //	
 //	public T findByProperty(String propriedade,Object valor){
 //		StringBuilder sql = new StringBuilder("from ")

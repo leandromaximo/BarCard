@@ -1,6 +1,5 @@
 package br.com.barcard.mb;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -62,10 +61,6 @@ public class ProdutoMB  extends GenericMB {
 		}
 		endConversation();
 		return goTo("pesquisarProduto");
-	}
-	
-	public String editar(){
-		return "cadastrarProduto?faces-redirect=true";
 	}
 	
 	public String excluir(){

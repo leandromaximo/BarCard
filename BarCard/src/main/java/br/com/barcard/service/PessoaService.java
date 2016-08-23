@@ -32,6 +32,21 @@ public class PessoaService extends AbstService{
 		}
 	}
 	
+	public void excluir(Pessoa p) {
+		try {
+			pessoaDAO.excluir(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void alterar(Pessoa p) {
+		try {
+			pessoaDAO.saveOrUpdate(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Collection<Pessoa> regraDeNegocioBuscar(Pessoa p) {
 		//regraDeNegocioAqui

@@ -1,6 +1,5 @@
 package br.com.barcard.mb;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,7 +15,7 @@ import br.com.barcard.service.PessoaService;
 
 @Named
 @ConversationScoped
-public class PessoaMB implements Serializable {
+public class PessoaMB extends GenericMB {
 
 	private static final long serialVersionUID = 4771270804699990999L;
 	
@@ -36,21 +35,31 @@ public class PessoaMB implements Serializable {
 	
 	public void initConversation(){
 		if (!FacesContext.getCurrentInstance().isPostback() 
-			&& conversation.isTransient()) {
-			conversation.begin();
+				&& conversation.isTransient()) {
+				conversation.begin();
 		}
 	}
 	
-	public String endConversation(){
+	public void endConversation(){
 		if(!conversation.isTransient()){
 			conversation.end();
 		}
-		return "home?faces-redirect=true";
 	}
 	
 	public String salvar(){
-		pessoaService.salvar(pessoa);
-		return "pesquisarPessoa?faces-redirect=true";
+		if(pessoa!=null && pessoa.getId()==null){
+			pessoaService.salvar(pessoa);
+		}else{
+			pessoaService.alterar(pessoa);
+		}
+		endConversation();
+		return goTo("pesquisarPessoa");
+	}
+	
+	public String excluir(){
+		pessoaService.excluir(pessoa);
+		endConversation();
+		return goTo("pesquisarPessoa");
 	}
 	
 	public Conversation getConversation() {

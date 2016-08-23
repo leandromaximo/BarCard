@@ -13,7 +13,8 @@
 			<div class="full"></div>
 		</div>
 
-		<h:form>
+		<h:form id="idForm">
+			<p:growl id="messages"/>
 			<div class="rows">
 				<div class="space">
 					<p:panelGrid>
@@ -50,7 +51,12 @@
 				<div class="space">
 					<p:panelGrid>
 						<p:column>
-							<p:commandButton value="Cadastrar" action="#{pessoaMB.salvar()}" />
+							<p:commandButton value="Salvar" action="#{pessoaMB.salvar()}" 
+								styleClass="button-cadastro"/>
+						</p:column>
+						<p:column>
+							<p:commandButton value="Cancelar" action="#{pessoaMB.goTo('pesquisarPessoa')}"
+								update="@form" styleClass="button-search"/>
 						</p:column>
 					</p:panelGrid>
 				</div>

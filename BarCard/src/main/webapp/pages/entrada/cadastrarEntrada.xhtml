@@ -17,21 +17,18 @@
 			<div class="full"></div>
 		</div>
 
-		<h:form>
+		<h:form id="idForm">
+			<p:growl id="messages"/>
 			<div class="rows">
 				<div class="space">
 					<p:panelGrid>
 						<p:row>
 							<p:column>
 								<p:outputLabel value="Selecionar Produto: *">
-									<p:outputLabel rendered="#{entradaMB.entrada.produto}!=null"
-										value="#{entradaMB.entrada.produto.nome}" />
-									<p:selectOneMenu value="#{entradaMB.entrada.produto}" converter="produtoConverter">
+									<p:selectOneMenu value="#{entradaMB.entrada.produto}" converter="produtoConverter" filter="true">
 							            <f:selectItem itemLabel="Selecione..." itemValue="" />
 							            <f:selectItems value="#{entradaMB.lstProduto}" var="p" itemLabel="#{p.nome}"/>
 							        </p:selectOneMenu>
-									<!-- p:commandLink value="Selecione..."
-										onclick="PF('selelecionaProduto').show()" / -->
 								</p:outputLabel>
 							</p:column>
 						</p:row>
@@ -60,39 +57,16 @@
 				<div class="space">
 					<p:panelGrid>
 						<p:column>
-							<p:commandButton value="Cadastrar" action="#{entradaMB.salvar()}"
-								update="@form" />
+							<p:commandButton value="Salvar" action="#{entradaMB.salvar()}"
+								styleClass="button-cadastro"/>
+						</p:column>
+						<p:column>
+							<p:commandButton value="Cancelar" action="#{entradaMB.goTo('pesquisarEntrada')}"
+								update="@form" styleClass="button-search"/>
 						</p:column>
 					</p:panelGrid>
 				</div>
 			</div>
-
-			<!-- p:dialog header="Selecionar Produto" modal="true"
-				widgetVar="selelecionaProduto" appendTo="@(body)">
-				<p:panelGrid>
-					<p:dataTable value="#{entradaMB.lstProduto}" var="produto"
-						emptyMessage="Nenhum registro encontrado." paginator="true"
-						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rows="10" rowsPerPageTemplate="5,10,15">
-						<p:column headerText="Nome do Produto">
-							<h:outputText value="#{produto.nome}" />
-						</p:column>
-						<p:column headerText="Descrição">
-							<h:outputText value="#{produto.descricao}" />
-						</p:column>
-						<p:column headerText="Valor">
-							<h:outputText value="#{produto.vlVenda}" />
-						</p:column>
-						<p:column >
-							<p:commandLink value="Teste" ajax="false"
-								oncomplete="PF('selelecionaProduto').hide()" >
-								<f:setPropertyActionListener value="#{produto}" target="#{entradaMB.entrada.produto}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataTable>
-				</p:panelGrid>
-			</p:dialog -->
-
 		</h:form>
 	</ui:define>
 </ui:composition>

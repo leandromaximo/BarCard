@@ -8,16 +8,13 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<ui:define name="centro">
-		<h:form>
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
-		</h:form>
 		<div class="agrupadorTitulo">
 			<h1>Cadastrar Produto</h1>
 			<div class="full"></div>
 		</div>
 
-		<h:form>
+		<h:form id="idForm">
+			<p:growl id="messages"/>
 			<div class="rows">
 				<div class="space">
 					<p:panelGrid>
@@ -51,8 +48,12 @@
 				<div class="space">
 					<p:panelGrid>
 						<p:column>
-							<p:commandButton value="Cadastrar" action="#{produtoMB.salvar()}"
-								update="@form" />
+							<p:commandButton value="Salvar" action="#{produtoMB.salvar()}"
+								styleClass="button-cadastro"/>
+						</p:column>
+						<p:column>
+							<p:commandButton value="Cancelar" action="#{produtoMB.goTo('pesquisarProduto')}"
+								update="@form" styleClass="button-search"/>
 						</p:column>
 					</p:panelGrid>
 				</div>

@@ -14,7 +14,7 @@
 		<div class="agrupadorTitulo">
 			<h1>Pesquisar Produtos</h1>
 			<div class="full"></div>
-			<p:commandButton value="Novo" style="left: 93%; background-color: #32CD32;"/>
+			<p:commandButton value="Novo" styleClass="button-novo" action="#{produtoMB.goTo('cadastrarProduto')}"/>
 		</div>
 
 		<h:form id="idForm">
@@ -28,7 +28,7 @@
 							</p:outputLabel>
 						</p:column>
 						<p:column>
-							<p:commandButton value="Buscar" style="background-color: #6495ED;"/>
+							<p:commandButton value="Buscar" styleClass="button-search"/>
 						</p:column>
 					</p:panelGrid>
 				</div>
@@ -54,7 +54,7 @@
 					<p:column headerText="Ações">
 						<p:commandLink styleClass="ui-icon ui-icon-pencil"
 						 	title="Editar Produto"
-							action="#{produtoMB.editar()}" >
+							action="#{produtoMB.goTo('cadastrarProduto')}" >
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{produtoMB.produto}" />
 						</p:commandLink>

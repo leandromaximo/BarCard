@@ -7,13 +7,17 @@
 	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="centro">
+		<!-- INICIALIZA A CONVERSACAO -->
+		<f:event listener="#{produtoMB.initConversation()}" type="preRenderView" />
 
 		<div class="agrupadorTitulo">
 			<h1>Pesquisar Pessoas</h1>
 			<div class="full"></div>
+			<p:commandButton value="Novo" styleClass="button-novo" action="#{pessoaMB.goTo('cadastrarPessoa')}"/>
 		</div>
 
-		<h:form>
+		<h:form id="idForm">
+			<p:growl id="messages"/>
 			<div class="rows">
 				<div class="space">
 					<p:panelGrid >
@@ -23,7 +27,7 @@
 							</p:outputLabel>
 						</p:column>
 						<p:column>
-							<p:commandButton value="Buscar" />
+							<p:commandButton value="Buscar" styleClass="button-search"/>
 						</p:column>
 					</p:panelGrid>
 				</div>
@@ -46,6 +50,20 @@
          					<f:param value="#{pessoa.telefone.substring(2,6)}" />
          					<f:param value="#{pessoa.telefone.substring(6,10)}" />
 						</h:outputFormat>
+					</p:column>
+					<p:column headerText="Ações">
+						<p:commandLink styleClass="ui-icon ui-icon-pencil"
+						 	title="Editar Pessoa"
+							action="#{pessoaMB.goTo('cadastrarPessoa')}" >
+							<f:setPropertyActionListener value="#{pessoa}"
+								target="#{pessoaMB.pessoa}" />
+						</p:commandLink>
+						<p:commandLink styleClass="ui-icon ui-icon-close"
+						 	title="Excluir Pessoa"
+							action="#{pessoaMB.excluir()}" >
+							<f:setPropertyActionListener value="#{pessoa}"
+								target="#{pessoaMB.pessoa}" />
+						</p:commandLink>
 					</p:column>
 				</p:dataTable>
 			</p:panelGrid>

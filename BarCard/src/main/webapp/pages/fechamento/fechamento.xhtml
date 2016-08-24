@@ -36,7 +36,7 @@
 			
 			<p:panelGrid>
 				<p:dataTable value="#{saidaMB.lstSaida}" var="saida"
-					emptyMessage="Nenhum registro encontrado.">
+					emptyMessage="Nenhum registro encontrado." rendered="#{saidaMB.lstSaida.size() > 0}">
 					<p:column headerText="Data da Venda">
 						<h:outputText value="#{saida.dtSaida}" >
 							<f:convertDateTime pattern="dd/MM/YY - HH:mm" />

@@ -103,7 +103,7 @@
 						<p:panelGrid>
 							<p:column>
 								<p:commandButton value="Cadastrar"
-									action="#{produtoMB.salvarEntrada()}" />
+									action="#{produtoMB.salvarEntrada()}" oncomplete="PF('adicionaProduto').hide())" />
 							</p:column>
 						</p:panelGrid>
 					</div>

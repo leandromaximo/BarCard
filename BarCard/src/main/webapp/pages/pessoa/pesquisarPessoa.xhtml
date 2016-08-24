@@ -4,37 +4,44 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui">
+	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<ui:define name="centro">
 		<!-- INICIALIZA A CONVERSACAO -->
-		<f:event listener="#{produtoMB.initConversation()}" type="preRenderView" />
+		<f:event listener="#{pessoaMB.initConversation()}"
+			type="preRenderView" />
 
 		<div class="agrupadorTitulo">
 			<h1>Pesquisar Pessoas</h1>
 			<div class="full"></div>
-			<p:commandButton value="Novo" styleClass="button-novo" action="#{pessoaMB.goTo('cadastrarPessoa')}"/>
+			<p:commandButton value="Novo" styleClass="button-novo"
+				action="#{pessoaMB.goTo('cadastrarPessoa')}" />
 		</div>
 
 		<h:form id="idForm">
-			<p:growl id="messages"/>
+			 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		    </p:confirmDialog>
+			<p:growl id="messages" />
 			<div class="rows">
 				<div class="space">
-					<p:panelGrid >
+					<p:panelGrid>
 						<p:column>
 							<p:outputLabel value="Nome: ">
 								<p:inputText styleClass="obrigatorio" />
 							</p:outputLabel>
 						</p:column>
 						<p:column>
-							<p:commandButton value="Buscar" styleClass="button-search"/>
+							<p:commandButton value="Buscar" styleClass="button-search" />
 						</p:column>
 					</p:panelGrid>
 				</div>
 			</div>
 
 			<div class="divisor" />
-			
+
 			<p:panelGrid>
 				<p:dataTable value="#{pessoaMB.listPessoa}" var="pessoa"
 					emptyMessage="Nenhum registro encontrado.">
@@ -42,25 +49,31 @@
 						<h:outputText value="#{pessoa.pessoaFisica.nome}" />
 					</p:column>
 					<p:column headerText="CPF">
-						<h:outputText value="#{pessoa.pessoaFisica.cpf}" converter="cpfConverter"/>
+						<h:outputText value="#{pessoa.pessoaFisica.cpf}"
+							converter="cpfConverter" />
 					</p:column>
 					<p:column headerText="Telefone">
-						<h:outputFormat value="({0}) {1} - {2}" >
+						<h:outputFormat value="({0}) {1} - {2}">
 							<f:param value="#{pessoa.telefone.substring(0,2)}" />
-         					<f:param value="#{pessoa.telefone.substring(2,6)}" />
-         					<f:param value="#{pessoa.telefone.substring(6,10)}" />
+							<f:param value="#{pessoa.telefone.substring(2,6)}" />
+							<f:param value="#{pessoa.telefone.substring(6,10)}" />
 						</h:outputFormat>
 					</p:column>
 					<p:column headerText="Ações">
 						<p:commandLink styleClass="ui-icon ui-icon-pencil"
-						 	title="Editar Pessoa"
-							action="#{pessoaMB.goTo('cadastrarPessoa')}" >
+							title="Editar Pessoa"
+							action="#{pessoaMB.goTo('cadastrarPessoa')}">
+							<f:setPropertyActionListener value="#{pessoa}"
+								target="#{pessoaMB.pessoa}" />
+						</p:commandLink>
+						<p:commandLink styleClass="ui-icon ui-icon-tag"
+							update=":assocCartaoModal" title="Associar Cartão"
+							oncomplete="PF('associarCartao').show()">
 							<f:setPropertyActionListener value="#{pessoa}"
 								target="#{pessoaMB.pessoa}" />
 						</p:commandLink>
 						<p:commandLink styleClass="ui-icon ui-icon-close"
-						 	title="Excluir Pessoa"
-							action="#{pessoaMB.excluir()}" >
+							title="Excluir Pessoa" action="#{pessoaMB.excluir()}">
 							<f:setPropertyActionListener value="#{pessoa}"
 								target="#{pessoaMB.pessoa}" />
 						</p:commandLink>
@@ -68,5 +81,29 @@
 				</p:dataTable>
 			</p:panelGrid>
 		</h:form>
+		<p:dialog id="assocCartaoModal"
+			header="Associar cartão de #{pessoaMB.pessoa.pessoaFisica.nome}"
+			modal="true" widgetVar="associarCartao" appendTo="@(body)">
+			<h:form>
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:inputText value="#{pessoaMB.cartao.cdCartao}" />
+							<p:commandButton style="display: none;" 
+								rendered="#{pessoaMB.pessoa.cartao==null}"
+								action="#{pessoaMB.salvarCartao()}"
+								oncomplete="PF('associarCartao').hide" />
+							<p:commandButton style="display: none;" 
+								rendered="#{pessoaMB.pessoa.cartao!=null}"
+								action="#{pessoaMB.salvarCartao()}"
+								oncomplete="PF('alterarCartao').hide" >
+								<p:confirm header="Confirmação" icon="ui-icon-alert"
+									message="Esta pessoa já possui um cartão associado, deseja alterar este cartão?" />
+							</p:commandButton>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>

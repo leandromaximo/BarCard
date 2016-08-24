@@ -8,34 +8,73 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<ui:define name="centro">
-		<h:form>
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
-		</h:form>
-		<div class="agrupadorTitulo">
-			<h1>Cadastrar Venda</h1>
-			<div class="full"></div>
-		</div>
+		<!-- INICIALIZA A CONVERSACAO -->
+		<f:event listener="#{saidaMB.initConversation()}" type="preRenderView" />
 
 		<h:form id="idForm">
-			<p:dataGrid var="produto" value="#{saidaMB.lstProduto}" columns="4" layout="grid" rows="10"
-				paginator="true" rowsPerPageTemplate="5,10,15,20" 
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
-				
-		        <p:panel header="#{produto.nome}">
-		        	<h:panelGrid columns="1" style="margin: auto; width:50%; padding: 1px;">
-			        	<p:commandLink >
-			        		<h:graphicImage height="130" library="images" name="topo.png" />
-	                    	<f:setPropertyActionListener value="#{produto}" target="#{saidaMB.saida.produto}" />
-	                	</p:commandLink>
-	                	<h:outputText value="#{produto.nome}" />
-	                	<h:outputText value="#{produto.descricao}" />
-	                	<h:outputText value="#{produto.qntEstoque}" />
-	                	<h:outputText value="#{produto.vlVenda}" />
-	                </h:panelGrid>   
-		        </p:panel>
-				
+			<p:growl id="messages" />
+			<p:dataGrid var="produto" value="#{saidaMB.lstProduto}" columns="4"
+				layout="grid" rows="10" paginator="true"
+				rowsPerPageTemplate="5,10,15,20"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+				<p:panel header="#{produto.nome}">
+					<h:panelGrid columns="1"
+						style="margin: auto; width:50%; padding: 1px;">
+						<p:commandLink update=":vendaProdModal"
+							oncomplete="PF('vendaProduto').show()">
+							<h:graphicImage height="130" library="images" name="topo.png" />
+							<f:setPropertyActionListener value="#{produto}"
+								target="#{saidaMB.saida.produto}" />
+						</p:commandLink>
+						<h:outputText value="#{produto.descricao}" />
+						<h:outputText value="Valor: R$ #{produto.vlVenda}" />
+						<p:row>
+							<p:outputLabel value="Estoque:" style="margin: auto; width:35%;" />
+							<p:outputLabel value="#{produto.qntEstoque}">
+								<f:convertNumber integerOnly="true" />
+							</p:outputLabel>
+						</p:row>
+					</h:panelGrid>
+				</p:panel>
 			</p:dataGrid>
 		</h:form>
+		<p:dialog id="vendaProdModal"
+			header="Vender #{saidaMB.saida.produto.nome}" modal="true"
+			widgetVar="vendaProduto" appendTo="@(body)">
+			<h:form>
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:selectOneMenu value="#{saidaMB.saida.qntSaida}">
+								<f:selectItem itemLabel="1" itemValue="#{saidaMB.inicial}" />
+								<f:selectItems value="#{saidaMB.listQnt()}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<div class="rows">
+					<div class="space">
+						<p:panelGrid>
+							<p:column>
+								<p:commandButton value="Passar Cartão" update="cartaoVendaModal"
+									oncomplete="PF('cartaoVenda').show()" />
+							</p:column>
+						</p:panelGrid>
+					</div>
+				</div>
+			</h:form>
+		</p:dialog>
+		<p:dialog id="cartaoVendaModal"
+			header="Vender #{saidaMB.saida.produto.nome}" modal="true"
+			widgetVar="cartaoVenda" appendTo="@(body)">
+			<h:form>
+				<p:panelGrid>
+					<p:inputText value="#{saidaMB.cdCartao}" />
+					<p:commandButton style="display: none;" 
+						action="#{saidaMB.salvar()}"
+						oncomplete="PF('cartaoVenda').hide" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>

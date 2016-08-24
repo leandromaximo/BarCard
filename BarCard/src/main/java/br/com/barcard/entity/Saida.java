@@ -40,17 +40,17 @@ public class Saida implements ItfEntidade{
 	
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DT_SAIDA")
+	@Column(name = "DT_SAIDA", nullable=false)
 	private Date dtSaida;
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_PRODUTO")
+	@JoinColumn(name = "ID_PRODUTO", nullable=false)
 	private Produto produto;
 	
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_PESSOA")
+	@JoinColumn(name = "ID_PESSOA", nullable=false)
 	private Pessoa pessoa;
 	
 	public Saida(){
@@ -95,6 +95,14 @@ public class Saida implements ItfEntidade{
 
 	public void setDtSaida(Date dtSaida) {
 		this.dtSaida = dtSaida;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 	
 }

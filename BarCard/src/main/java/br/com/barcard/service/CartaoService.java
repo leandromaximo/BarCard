@@ -4,68 +4,68 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-import br.com.barcard.dao.PessoaDAO;
+import br.com.barcard.dao.CartaoDAO;
 import br.com.barcard.entity.Cartao;
 import br.com.barcard.entity.Pessoa;
 import br.com.barcard.generic.service.AbstService;
 
-public class PessoaService extends AbstService{
+public class CartaoService extends AbstService{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	PessoaDAO pessoaDAO;
+	CartaoDAO cartaoDAO;
 	
-	public void regraDeNegocioAqui(Pessoa p) {
+	public void regraDeNegocioAqui(Cartao c) {
 		//regraDeNegocioAqui
 		try {
-			pessoaDAO.incluir(p);
+			cartaoDAO.incluir(c);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void salvar(Pessoa p) {
+	public void salvar(Cartao c) {
 		try {
-			pessoaDAO.incluir(p);
+			cartaoDAO.incluir(c);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void excluir(Pessoa p) {
+	public void excluir(Cartao c) {
 		try {
-			pessoaDAO.excluir(p);
+			cartaoDAO.excluir(c);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void alterar(Pessoa p) {
+	public void alterar(Cartao c) {
 		try {
-			pessoaDAO.saveOrUpdate(p);
+			cartaoDAO.saveOrUpdate(c);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public Collection<Pessoa> regraDeNegocioBuscar(Pessoa p) {
+	public Collection<Cartao> regraDeNegocioBuscar(Cartao c) {
 		//regraDeNegocioAqui
 		try {
-			return pessoaDAO.findAll(Pessoa.class);
+			return cartaoDAO.findAll(Cartao.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public Collection<Pessoa> outraRegraDeNegocioEspecificaBuscar(Pessoa p) {
+	public Collection<Cartao> outraRegraDeNegocioEspecificaBuscar(Cartao c) {
 		//regraDeNegocioAqui
-		return pessoaDAO.aquiUmaQuerieEspecifica("",null);
+		return cartaoDAO.aquiUmaQuerieEspecifica("",null);
 	}
 	
-	public Pessoa buscarPorCodigoCartao(String codigo){
-		return pessoaDAO.buscarPorCodigoCartao(codigo);
+	public Cartao buscarPorPessoa(Pessoa p){
+		return cartaoDAO.buscarPorPessoa(p);
 	}
-	
+
 }

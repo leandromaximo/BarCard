@@ -10,7 +10,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.barcard.entity.Cartao;
 import br.com.barcard.entity.Pessoa;
+import br.com.barcard.service.CartaoService;
 import br.com.barcard.service.PessoaService;
 
 @Named
@@ -25,8 +27,12 @@ public class PessoaMB extends GenericMB {
 	@Inject 
 	PessoaService pessoaService;
 	
+	@Inject 
+	CartaoService cartaoService;
+	
 	Collection<Pessoa> listPessoa = new ArrayList<Pessoa>();
 	Pessoa pessoa = new Pessoa();
+	Cartao cartao = new Cartao();
 	
 	@PostConstruct
 	public void init(){
@@ -62,6 +68,18 @@ public class PessoaMB extends GenericMB {
 		return goTo("pesquisarPessoa");
 	}
 	
+	public String salvarCartao(){
+		if(pessoa.getCartao()!=null && pessoa.getCartao().getId()!=null){
+			Cartao cartaoExcluir = pessoa.getCartao();
+			cartaoService.excluir(cartaoExcluir);
+		}
+		pessoa.setCartao(cartao);
+		pessoaService.alterar(pessoa);
+		endConversation();
+		return goTo("pesquisarPessoa");
+	}
+	
+	
 	public Conversation getConversation() {
 		return conversation;
 	}
@@ -80,6 +98,14 @@ public class PessoaMB extends GenericMB {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public Cartao getCartao() {
+		return cartao;
+	}
+
+	public void setCartao(Cartao cartao) {
+		this.cartao = cartao;
 	}
 	
 }

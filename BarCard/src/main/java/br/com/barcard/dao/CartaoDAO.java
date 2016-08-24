@@ -4,17 +4,18 @@ import java.util.Collection;
 
 import javax.persistence.Query;
 
+import br.com.barcard.entity.Cartao;
 import br.com.barcard.entity.Pessoa;
 import br.com.barcard.generic.dao.AbstDAO;
 
-public class PessoaDAO extends AbstDAO	{
+public class CartaoDAO extends AbstDAO	{
 
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unchecked")
-	public Collection<Pessoa> aquiUmaQuerieEspecifica(String propriedade,Object valor){
+	public Collection<Cartao> aquiUmaQuerieEspecifica(String propriedade,Object valor){
 		try {
-			StringBuilder sql = new StringBuilder("from Pessoa");
+			StringBuilder sql = new StringBuilder("from Cartao");
 
 			Query q = getEntityManager().createQuery(sql.toString());
 
@@ -25,20 +26,19 @@ public class PessoaDAO extends AbstDAO	{
 		return null;
 	}
 	
-	public Pessoa buscarPorCodigoCartao(String codigo){
+	public Cartao buscarPorPessoa(Pessoa p){
 		try {
-			StringBuilder sql = new StringBuilder("from Pessoa ");
-			sql.append(" where cartao.cdCartao = :codigo");
+			StringBuilder sql = new StringBuilder("from Cartao ");
+			sql.append(" where pessoa = :pessoa");
 
 			Query q = getEntityManager().createQuery(sql.toString());
 			
-			q.setParameter("codigo", codigo);
+			q.setParameter("pessoa", p);
 			
-			return (Pessoa) q.getSingleResult();
+			return (Cartao) q.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
 }

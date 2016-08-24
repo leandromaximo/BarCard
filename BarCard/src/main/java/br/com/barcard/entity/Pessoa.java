@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -27,14 +28,19 @@ public class Pessoa implements ItfEntidade{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JoinColumn(name = "ID_PESSOA_FISICA", nullable=true)
+	@NotNull
+	@Column(name="NR_TELEFONE", nullable=true, length=14)
+	private String telefone;
+	
+	@JoinColumn(name = "ID_PESSOA_FISICA", nullable=false)
 	@Cascade(CascadeType.ALL)
 	@OneToOne(fetch=FetchType.LAZY)
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 	
-	@NotNull
-	@Column(name="NR_TELEFONE", nullable=true, length=14)
-	private String telefone;
+	@JoinColumn(name = "ID_CARTAO", nullable=true)
+	@Cascade(CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER)
+	private Cartao cartao = new Cartao();
 
 	public Pessoa(){
 		
@@ -48,6 +54,14 @@ public class Pessoa implements ItfEntidade{
 		this.id = id;
 	}
 
+	public String getTelefone() {
+		return telefone;
+	}
+	
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	
 	public PessoaFisica getPessoaFisica() {
 		return pessoaFisica;
 	}
@@ -55,13 +69,13 @@ public class Pessoa implements ItfEntidade{
 	public void setPessoaFisica(PessoaFisica pessoaFisica) {
 		this.pessoaFisica = pessoaFisica;
 	}
-
-	public String getTelefone() {
-		return telefone;
-	}
 	
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public Cartao getCartao() {
+		return cartao;
+	}
+
+	public void setCartao(Cartao cartao) {
+		this.cartao = cartao;
 	}
 	
 }

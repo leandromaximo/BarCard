@@ -13,9 +13,11 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.barcard.entity.Cartao;
 import br.com.barcard.entity.Pessoa;
 import br.com.barcard.entity.Produto;
 import br.com.barcard.entity.Saida;
+import br.com.barcard.service.CartaoService;
 import br.com.barcard.service.PessoaService;
 import br.com.barcard.service.ProdutoService;
 import br.com.barcard.service.SaidaService;
@@ -38,6 +40,10 @@ public class SaidaMB extends GenericMB {
 	@Inject
 	PessoaService pessoaService;
 	
+	@Inject
+	CartaoService cartaoService;
+	
+	
 	Collection<Saida> lstSaida = new ArrayList<Saida>();
 	Saida saida = new Saida();
 	Collection<Produto> lstProduto = new ArrayList<Produto>();
@@ -47,8 +53,12 @@ public class SaidaMB extends GenericMB {
 	
 	@PostConstruct
 	public void init(){
-		lstSaida  = saidaService.outraRegraDeNegocioEspecificaBuscar(null);
-		lstProduto  = produtoService.outraRegraDeNegocioEspecificaBuscar(null);
+		try {
+			lstSaida  = saidaService.findAllByProperty();
+			lstProduto  = produtoService.outraRegraDeNegocioEspecificaBuscar(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void initConversation(){
@@ -72,6 +82,7 @@ public class SaidaMB extends GenericMB {
 					saida.setPessoa(pessoa);
 					saida.setDtSaida(new Date());
 					saida.setVlVenda(saida.getProduto().getVlVenda());
+					saida.setStAtivo(true);
 					saidaService.salvar(saida);
 					endConversation();
 					return goTo("cadastrarVenda");
@@ -112,8 +123,35 @@ public class SaidaMB extends GenericMB {
 		return total;
 	}
 	
+	public String fechaConta(){
+		if(lstFechamento.size()>0){
+			Pessoa pessoa = ((List<Saida>)lstFechamento).get(0).getPessoa();
+			Cartao cartao = pessoa.getCartao();
+			pessoa.setCartao(null);
+			for (Saida saida : lstFechamento) {
+				saida.setStAtivo(false);
+				saidaService.alterar(saida);
+			}
+			pessoaService.alterar(pessoa);
+			cartaoService.excluir(cartao);
+		}else{
+			addMessageErro("Passe o Cartão.");
+		}
+		return goTo("fechamento");
+	}
+	
 	public void buscarFechamento(){
-		lstFechamento = saidaService.buscarPorCodigoCartao(cdCartao);
+		if(!cdCartao.equals("")){
+			Cartao cartao = cartaoService.buscarPorCodigo(cdCartao);
+			if(cartao!=null){
+				lstFechamento = saidaService.buscarPorCodigoCartao(cdCartao);
+			}else{
+				addMessageErro("Cartão não cadastrado.");
+			}
+		}else{
+			addMessageErro("Passe o Cartão.");
+		}
+		cdCartao =  new String();
 	}
 	
 	public Conversation getConversation() {

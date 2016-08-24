@@ -60,6 +60,7 @@ public class ProdutoMB  extends GenericMB {
 			produtoService.alterar(produto);
 		}
 		endConversation();
+		addMessageInfo("Cadastrado com Sucesso!");
 		return goTo("pesquisarProduto");
 	}
 	
@@ -75,7 +76,7 @@ public class ProdutoMB  extends GenericMB {
 			entradaService.salvar(entrada);
 		}
 		endConversation();
-		addMessageInfo("cadastrado!");
+		addMessageInfo("Cadastrado com Sucesso!");
 		return goTo("pesquisarProduto");
 	}
 

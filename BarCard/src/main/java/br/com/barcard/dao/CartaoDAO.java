@@ -41,4 +41,20 @@ public class CartaoDAO extends AbstDAO	{
 		}
 		return null;
 	}
+	
+	public Cartao buscarPorCodigo(String codigo){
+		try {
+			StringBuilder sql = new StringBuilder("from Cartao ");
+			sql.append(" where cdCartao = :cdCartao");
+
+			Query q = getEntityManager().createQuery(sql.toString());
+			
+			q.setParameter("cdCartao", codigo);
+			
+			return (Cartao) q.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

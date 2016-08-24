@@ -67,5 +67,9 @@ public class CartaoService extends AbstService{
 	public Cartao buscarPorPessoa(Pessoa p){
 		return cartaoDAO.buscarPorPessoa(p);
 	}
+	
+	public Cartao buscarPorCodigo(String codigo){
+		return cartaoDAO.buscarPorCodigo(codigo);
+	}
 
 }

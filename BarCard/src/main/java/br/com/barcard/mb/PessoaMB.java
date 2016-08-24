@@ -59,6 +59,7 @@ public class PessoaMB extends GenericMB {
 			pessoaService.alterar(pessoa);
 		}
 		endConversation();
+		addMessageInfo("Cadastrado com Sucesso!");
 		return goTo("pesquisarPessoa");
 	}
 	
@@ -76,6 +77,7 @@ public class PessoaMB extends GenericMB {
 		pessoa.setCartao(cartao);
 		pessoaService.alterar(pessoa);
 		endConversation();
+		addMessageInfo("Cadastrado com Sucesso!");
 		return goTo("pesquisarPessoa");
 	}
 	

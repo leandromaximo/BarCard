@@ -65,10 +65,11 @@ public class EntradaMB extends GenericMB {
 				entradaService.alterar(entrada);
 			}
 			endConversation();
+			addMessageInfo("Cadastrado com Sucesso!");
 			return goTo("pesquisarEntrada");
 		}else{
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Selecione um produto."));
-			return null;
+			addMessageErro("Selecione um produto.");
+			return goTo("cadatrarEntrada");
 		}
 	}
 	

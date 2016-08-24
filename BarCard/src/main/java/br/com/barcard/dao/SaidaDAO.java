@@ -30,10 +30,12 @@ public class SaidaDAO extends AbstDAO	{
 		try {
 			StringBuilder sql = new StringBuilder("from Saida ");
 			sql.append(" where pessoa.cartao.cdCartao = :codigo");
+			sql.append(" and stAtivo = :stAtivo");
 
 			Query q = getEntityManager().createQuery(sql.toString());
 			
 			q.setParameter("codigo", codigo);
+			q.setParameter("stAtivo", true);
 			
 			return q.getResultList();
 		} catch (Exception e) {

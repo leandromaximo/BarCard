@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.hibernate.criterion.Order;
+
 import br.com.barcard.dao.SaidaDAO;
 import br.com.barcard.entity.Saida;
 import br.com.barcard.generic.service.AbstService;
@@ -67,6 +69,10 @@ public class SaidaService extends AbstService{
 	
 	public List<Saida> buscarPorCodigoCartao(String codigo){
 		return saidaDAO.buscarPorCodigoCartao(codigo);
+	}
+	
+	public List<Saida> findAllByProperty() throws Exception{
+		return (List<Saida>) saidaDAO.findAllByProperty(Saida.class,"stAtivo",true,Order.desc("id"));
 	}
 	
 }

@@ -16,6 +16,10 @@
 		</div>
 
 		<h:form id="idForm">
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		    </p:confirmDialog>
 			<p:growl id="messages"/>
 			<div class="rows">
 				<div class="space">
@@ -58,6 +62,8 @@
 						<p:commandLink styleClass="ui-icon ui-icon-close"
 						 	title="Excluir Venda"
 							action="#{saidaMB.excluir()}" >
+							<p:confirm header="Confirmação" icon="ui-icon-alert"
+									message="Tem certeza que deseja excluir essa venda?" />
 							<f:setPropertyActionListener value="#{saida}"
 								target="#{saidaMB.saida}" />
 						</p:commandLink>

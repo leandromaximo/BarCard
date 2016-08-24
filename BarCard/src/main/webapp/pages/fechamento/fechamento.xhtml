@@ -16,6 +16,10 @@
 		</div>
 
 		<h:form id="idForm">
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		    </p:confirmDialog>
 			<p:growl id="messages"/>
 			<div class="rows">
 				<div class="space">
@@ -71,16 +75,14 @@
 					</b>
 				</p:column>
 			</p:panelGrid>
-			<div class="rows">
-				<div class="space">
-					<p:panelGrid>
-						<p:column>
-							<p:commandButton value="Fechar Conta" 
-								styleClass="button-cadastro"/>
-						</p:column>
-					</p:panelGrid>
-				</div>
-			</div>
+			<p:panelGrid style="margin: auto;">
+				<p:column>
+					<p:commandButton value="Fechar Conta" action="#{saidaMB.fechaConta()}" styleClass="button-cadastro" >
+						<p:confirm header="Confirmação" icon="ui-icon-alert"
+									message="Tem certeza que deseja fechar a conta?" />
+					</p:commandButton>
+				</p:column>
+			</p:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>

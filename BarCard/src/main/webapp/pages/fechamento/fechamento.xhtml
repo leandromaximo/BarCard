@@ -39,7 +39,10 @@
 			
 			<p:panelGrid columns="1">
 				<p:dataTable value="#{saidaMB.lstFechamento}" var="saida"
-					emptyMessage="Nenhum registro encontrado." rendered="#{saidaMB.lstSaida.size() > 0}">
+					emptyMessage="Nenhum registro encontrado." rendered="#{saidaMB.lstSaida.size() > 0}"
+					rows="10" paginator="true"
+					rowsPerPageTemplate="10,20,30"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 					<p:column headerText="Data da Venda">
 						<h:outputText value="#{saida.dtSaida}" >
 							<f:convertDateTime pattern="dd/MM/YY - HH:mm" />

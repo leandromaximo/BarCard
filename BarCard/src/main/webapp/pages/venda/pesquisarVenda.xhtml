@@ -11,7 +11,7 @@
 		<f:event listener="#{saidaMB.initConversation()}" type="preRenderView" />
 
 		<div class="agrupadorTitulo">
-			<h1>Pesquisar Vendas</h1>
+			<h1>Vendas</h1>
 			<div class="full"></div>
 		</div>
 
@@ -21,26 +21,12 @@
 		        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 		    </p:confirmDialog>
 			<p:growl id="messages"/>
-			<div class="rows">
-				<div class="space">
-					<p:panelGrid >
-						<p:column>
-							<p:outputLabel value="Nome: ">
-								<p:inputText styleClass="obrigatorio" />
-							</p:outputLabel>
-						</p:column>
-						<p:column>
-							<p:commandButton value="Buscar" styleClass="button-search" />
-						</p:column>
-					</p:panelGrid>
-				</div>
-			</div>
-
-			<div class="divisor" />
-			
 			<p:panelGrid columns="1">
 				<p:dataTable value="#{saidaMB.lstSaida}" var="saida"
-					emptyMessage="Nenhum registro encontrado.">
+					emptyMessage="Nenhum registro encontrado."
+					rows="10" paginator="true"
+					rowsPerPageTemplate="10,20,30"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 					<p:column headerText="Data da Venda">
 						<h:outputText value="#{saida.dtSaida}" >
 							<f:convertDateTime pattern="dd/MM/YY - HH:mm" />

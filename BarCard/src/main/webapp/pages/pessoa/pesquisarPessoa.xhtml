@@ -30,11 +30,12 @@
 					<p:panelGrid>
 						<p:column>
 							<p:outputLabel value="Nome: ">
-								<p:inputText styleClass="obrigatorio" />
+								<p:inputText value="#{pessoaMB.nomeFilter}" />
 							</p:outputLabel>
 						</p:column>
 						<p:column>
-							<p:commandButton value="Buscar" styleClass="button-search" />
+							<p:commandButton value="Buscar" action="#{pessoaMB.buscarPorNome()}" 
+								styleClass="button-search" />
 						</p:column>
 					</p:panelGrid>
 				</div>
@@ -44,7 +45,10 @@
 
 			<p:panelGrid columns="1">
 				<p:dataTable value="#{pessoaMB.listPessoa}" var="pessoa"
-					emptyMessage="Nenhum registro encontrado.">
+					emptyMessage="Nenhum registro encontrado."
+					rows="10" paginator="true"
+					rowsPerPageTemplate="10,20,30"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 					<p:column headerText="Nome">
 						<h:outputText value="#{pessoa.pessoaFisica.nome}" />
 					</p:column>
@@ -69,6 +73,14 @@
 						<p:commandLink styleClass="ui-icon ui-icon-tag"
 							update=":assocCartaoModal" title="Associar Cartão"
 							oncomplete="PF('associarCartao').show()">
+							<f:setPropertyActionListener value="#{pessoa}"
+								target="#{pessoaMB.pessoa}" />
+						</p:commandLink>
+						<p:commandLink rendered="#{pessoa.lstSaida.size() le 0}" styleClass="ui-icon ui-icon-close"
+						 	title="Excluir Pessoa"
+							action="#{pessoaMB.excluir()}" >
+							<p:confirm header="Confirmação" icon="ui-icon-alert"
+									message="Tem certeza que deseja excluir este produto?" />
 							<f:setPropertyActionListener value="#{pessoa}"
 								target="#{pessoaMB.pessoa}" />
 						</p:commandLink>

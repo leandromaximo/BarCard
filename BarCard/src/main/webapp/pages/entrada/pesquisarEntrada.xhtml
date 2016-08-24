@@ -13,21 +13,25 @@
 		<div class="agrupadorTitulo">
 			<h1>Pesquisar Entradas</h1>
 			<div class="full"></div>
-			<p:commandButton value="Novo" styleClass="button-novo" action="#{entradaMB.goTo('cadastrarEntrada')}"/>
 		</div>
 
 		<h:form id="idForm">
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		    </p:confirmDialog>
 			<p:growl id="messages"/>
 			<div class="rows">
 				<div class="space">
-					<p:panelGrid >
+					<p:panelGrid>
 						<p:column>
 							<p:outputLabel value="Nome: ">
-								<p:inputText styleClass="obrigatorio" />
+								<p:inputText value="#{entradaMB.nomeFilter}" />
 							</p:outputLabel>
 						</p:column>
 						<p:column>
-							<p:commandButton value="Buscar" styleClass="button-search"/>
+							<p:commandButton value="Buscar" action="#{entradaMB.buscarPorNome()}" 
+								styleClass="button-search" />
 						</p:column>
 					</p:panelGrid>
 				</div>
@@ -37,7 +41,10 @@
 			
 			<p:panelGrid columns="1">
 				<p:dataTable value="#{entradaMB.lstEntrada}" var="entrada"
-					emptyMessage="Nenhum registro encontrado.">
+					emptyMessage="Nenhum registro encontrado."
+					rows="10" paginator="true"
+					rowsPerPageTemplate="10,20,30"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 					<p:column headerText="Data da Entrada">
 						<h:outputText value="#{entrada.dtEntrada}" >
 							<f:convertDateTime pattern="dd/MM/YY - HH:mm" />
@@ -53,15 +60,11 @@
 						<h:outputText value="#{entrada.quantidade}" />
 					</p:column>
 					<p:column headerText="Ações">
-						<p:commandLink styleClass="ui-icon ui-icon-pencil"
-						 	title="Editar Entrada"
-							action="#{entradaMB.goTo('cadastrarEntrada')}" >
-							<f:setPropertyActionListener value="#{entrada}"
-								target="#{entradaMB.entrada}" />
-						</p:commandLink>
 						<p:commandLink styleClass="ui-icon ui-icon-close"
 						 	title="Excluir Entrada"
 							action="#{entradaMB.excluir()}" >
+							<p:confirm header="Confirmação" icon="ui-icon-alert"
+									message="Tem certeza que deseja excluir esta entrada?" />
 							<f:setPropertyActionListener value="#{entrada}"
 								target="#{entradaMB.entrada}" />
 						</p:commandLink>

@@ -1,10 +1,12 @@
 package br.com.barcard.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import br.com.barcard.dao.ProdutoDAO;
+import br.com.barcard.entity.Pessoa;
 import br.com.barcard.entity.Produto;
 import br.com.barcard.generic.service.AbstService;
 
@@ -62,5 +64,9 @@ public class ProdutoService extends AbstService{
 	public Collection<Produto> outraRegraDeNegocioEspecificaBuscar(Produto p) {
 		//regraDeNegocioAqui
 		return produtoDAO.aquiUmaQuerieEspecifica("",null);
+	}
+	
+	public List<Produto> buscarPorNome(String nome){
+		return produtoDAO.buscarPorNome(nome);
 	}
 }

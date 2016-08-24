@@ -1,11 +1,11 @@
 package br.com.barcard.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import br.com.barcard.dao.PessoaDAO;
-import br.com.barcard.entity.Cartao;
 import br.com.barcard.entity.Pessoa;
 import br.com.barcard.generic.service.AbstService;
 
@@ -66,6 +66,10 @@ public class PessoaService extends AbstService{
 	
 	public Pessoa buscarPorCodigoCartao(String codigo){
 		return pessoaDAO.buscarPorCodigoCartao(codigo);
+	}
+	
+	public List<Pessoa> buscarPorNome(String nome){
+		return pessoaDAO.buscarPorNome(nome);
 	}
 	
 }

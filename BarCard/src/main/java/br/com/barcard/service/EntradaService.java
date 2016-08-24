@@ -1,11 +1,15 @@
 package br.com.barcard.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import org.hibernate.criterion.Order;
+
 import br.com.barcard.dao.EntradaDAO;
 import br.com.barcard.entity.Entrada;
+import br.com.barcard.entity.Saida;
 import br.com.barcard.generic.service.AbstService;
 
 public class EntradaService extends AbstService{
@@ -61,6 +65,14 @@ public class EntradaService extends AbstService{
 	public Collection<Entrada> outraRegraDeNegocioEspecificaBuscar(Entrada e) {
 		//regraDeNegocioAqui
 		return entradaDAO.aquiUmaQuerieEspecifica("",null);
+	}
+	
+	public List<Entrada> findAll() throws Exception{
+		return (List<Entrada>) entradaDAO.findAll(Entrada.class,Order.desc("id"));
+	}
+	
+	public List<Entrada> buscarPorNome(String nome){
+		return entradaDAO.buscarPorNome(nome);
 	}
 	
 }

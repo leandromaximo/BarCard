@@ -1,6 +1,7 @@
 package br.com.barcard.dao;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Query;
 
@@ -14,10 +15,27 @@ public class ProdutoDAO extends AbstDAO<Produto>	{
 	@SuppressWarnings("unchecked")
 	public Collection<Produto> aquiUmaQuerieEspecifica(String propriedade,Object valor){
 		try {
-			StringBuilder sql = new StringBuilder("from Produto");
+			StringBuilder sql = new StringBuilder("from Produto order by nome");
 
 			Query q = getEntityManager().createQuery(sql.toString());
 
+			return q.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Produto> buscarPorNome(String nome){
+		try {
+			StringBuilder sql = new StringBuilder("from Produto ");
+			sql.append(" where nome like '%");
+			sql.append(nome);
+			sql.append("%'");
+			sql.append("order by nome");
+
+			Query q = getEntityManager().createQuery(sql.toString());
+			
 			return q.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

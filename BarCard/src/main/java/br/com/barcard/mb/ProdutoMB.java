@@ -1,5 +1,6 @@
 package br.com.barcard.mb;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -34,6 +35,7 @@ public class ProdutoMB  extends GenericMB {
 	Collection<Produto> lstProduto = new ArrayList<Produto>();
 	Produto produto = new Produto();
 	Entrada entrada = new Entrada();
+	String nomeFilter = new String();
 	
 	@PostConstruct
 	public void init(){
@@ -54,14 +56,20 @@ public class ProdutoMB  extends GenericMB {
 	}
 	
 	public String salvar(){
-		if(produto!=null && produto.getId()==null){
-			produtoService.salvar(produto);
+		if(produto.getNome()!=null && !produto.getNome().equals("") &&
+				produto.getVlVenda()!=null && produto.getVlVenda().compareTo(BigDecimal.ZERO)>0){
+			if(produto!=null && produto.getId()==null){
+				produtoService.salvar(produto);
+			}else{
+				produtoService.alterar(produto);
+			}
+			endConversation();
+			addMessageInfo("Cadastrado com Sucesso!");
+			return goTo("pesquisarProduto");
 		}else{
-			produtoService.alterar(produto);
+			addMessageErro("Preencha todos os campos obrigatorios!");
+			return goTo("cadastrarProduto");
 		}
-		endConversation();
-		addMessageInfo("Cadastrado com Sucesso!");
-		return goTo("pesquisarProduto");
 	}
 	
 	public String excluir(){
@@ -71,15 +79,26 @@ public class ProdutoMB  extends GenericMB {
 	}
 	
 	public String salvarEntrada(){
-		if(entrada.getProduto()!=null && entrada.getProduto().getId()!=null){
-			entrada.setDtEntrada(new Date());
-			entradaService.salvar(entrada);
+		if(entrada.getQuantidade()!=null && entrada.getQuantidade().compareTo(BigDecimal.ZERO)>0 &&
+				entrada.getVlCusto()!=null && entrada.getVlCusto().compareTo(BigDecimal.ZERO)>0){
+			if(entrada.getProduto()!=null && entrada.getProduto().getId()!=null){
+				entrada.setDtEntrada(new Date());
+				entradaService.salvar(entrada);
+			}
+			endConversation();
+			addMessageInfo("Cadastrado com Sucesso!");
+			return goTo("pesquisarProduto");
+		}else{
+			addMessageErro("Preencha todos os campos obrigatorios!");
+			return goTo("pesquisarProduto");
 		}
-		endConversation();
-		addMessageInfo("Cadastrado com Sucesso!");
-		return goTo("pesquisarProduto");
 	}
 
+	public String buscarPorNome(){
+		lstProduto = produtoService.buscarPorNome(nomeFilter);
+		return goTo("pesquisarProduto");
+	}
+	
 	public Conversation getConversation() {
 		return conversation;
 	}
@@ -106,6 +125,14 @@ public class ProdutoMB  extends GenericMB {
 
 	public void setEntrada(Entrada entrada) {
 		this.entrada = entrada;
+	}
+
+	public String getNomeFilter() {
+		return nomeFilter;
+	}
+
+	public void setNomeFilter(String nomeFilter) {
+		this.nomeFilter = nomeFilter;
 	}
 	
 }

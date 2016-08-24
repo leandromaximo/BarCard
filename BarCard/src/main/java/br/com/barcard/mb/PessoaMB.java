@@ -33,6 +33,7 @@ public class PessoaMB extends GenericMB {
 	Collection<Pessoa> listPessoa = new ArrayList<Pessoa>();
 	Pessoa pessoa = new Pessoa();
 	Cartao cartao = new Cartao();
+	String nomeFilter = new String();
 	
 	@PostConstruct
 	public void init(){
@@ -53,14 +54,23 @@ public class PessoaMB extends GenericMB {
 	}
 	
 	public String salvar(){
-		if(pessoa!=null && pessoa.getId()==null){
-			pessoaService.salvar(pessoa);
+		if(pessoa.getTelefone()!=null && !pessoa.getTelefone().equals("") &&
+				pessoa.getPessoaFisica().getNome()!=null && !pessoa.getPessoaFisica().getNome().equals("") &&
+				pessoa.getPessoaFisica().getCpf()!=null && !pessoa.getPessoaFisica().getCpf().equals("") ){
+			if(pessoa!=null && pessoa.getId()==null){
+				pessoa.setCartao(null);
+				pessoaService.salvar(pessoa);
+			}else{
+				pessoa.setCartao(null);
+				pessoaService.alterar(pessoa);
+			}
+			endConversation();
+			addMessageInfo("Cadastrado com Sucesso!");
+			return goTo("pesquisarPessoa");
 		}else{
-			pessoaService.alterar(pessoa);
+			addMessageErro("Preencha todos os campos obrigatorios!");
+			return goTo("cadastrarPessoa");
 		}
-		endConversation();
-		addMessageInfo("Cadastrado com Sucesso!");
-		return goTo("pesquisarPessoa");
 	}
 	
 	public String excluir(){
@@ -70,17 +80,26 @@ public class PessoaMB extends GenericMB {
 	}
 	
 	public String salvarCartao(){
-		if(pessoa.getCartao()!=null && pessoa.getCartao().getId()!=null){
-			Cartao cartaoExcluir = pessoa.getCartao();
-			cartaoService.excluir(cartaoExcluir);
+		if(cartaoService.buscarPorCodigo(cartao.getCdCartao())==null){
+			if(pessoa.getCartao()!=null && pessoa.getCartao().getId()!=null){
+				Cartao cartaoExcluir = pessoa.getCartao();
+				cartaoService.excluir(cartaoExcluir);
+			}
+			pessoa.setCartao(cartao);
+			pessoaService.alterar(pessoa);
+			endConversation();
+			addMessageInfo("Cadastrado com Sucesso!");
+		}else{
+			addMessageErro("Cartão Associado a outra pessoa.");
 		}
-		pessoa.setCartao(cartao);
-		pessoaService.alterar(pessoa);
-		endConversation();
-		addMessageInfo("Cadastrado com Sucesso!");
+		cartao = new Cartao();
 		return goTo("pesquisarPessoa");
 	}
 	
+	public String buscarPorNome(){
+		listPessoa = pessoaService.buscarPorNome(nomeFilter);
+		return goTo("pesquisarPessoa");
+	}
 	
 	public Conversation getConversation() {
 		return conversation;
@@ -108,6 +127,14 @@ public class PessoaMB extends GenericMB {
 
 	public void setCartao(Cartao cartao) {
 		this.cartao = cartao;
+	}
+
+	public String getNomeFilter() {
+		return nomeFilter;
+	}
+
+	public void setNomeFilter(String nomeFilter) {
+		this.nomeFilter = nomeFilter;
 	}
 	
 }

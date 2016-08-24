@@ -1,5 +1,7 @@
 package br.com.barcard.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,11 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import br.com.barcard.entity.generic.ItfEntidade;
 
@@ -34,13 +39,18 @@ public class Pessoa implements ItfEntidade{
 	
 	@JoinColumn(name = "ID_PESSOA_FISICA", nullable=false)
 	@Cascade(CascadeType.ALL)
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	private PessoaFisica pessoaFisica = new PessoaFisica();
 	
 	@JoinColumn(name = "ID_CARTAO", nullable=true)
 	@Cascade(CascadeType.ALL)
 	@OneToOne(fetch=FetchType.EAGER)
 	private Cartao cartao = new Cartao();
+	
+	@Fetch(value = FetchMode.SUBSELECT)
+	@Cascade(CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pessoa")
+	private List<Saida> lstSaida;
 
 	public Pessoa(){
 		
@@ -76,6 +86,14 @@ public class Pessoa implements ItfEntidade{
 
 	public void setCartao(Cartao cartao) {
 		this.cartao = cartao;
+	}
+
+	public List<Saida> getLstSaida() {
+		return lstSaida;
+	}
+
+	public void setLstSaida(List<Saida> lstSaida) {
+		this.lstSaida = lstSaida;
 	}
 	
 }

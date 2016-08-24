@@ -11,7 +11,7 @@
 		<f:event listener="#{saidaMB.initConversation()}" type="preRenderView" />
 
 		<div class="agrupadorTitulo">
-			<h1>Pesquisar Vendas</h1>
+			<h1>Fechamento</h1>
 			<div class="full"></div>
 		</div>
 
@@ -21,12 +21,11 @@
 				<div class="space">
 					<p:panelGrid >
 						<p:column>
-							<p:outputLabel value="Nome: ">
-								<p:inputText styleClass="obrigatorio" />
+							<p:outputLabel value="Cartão: ">
+								<p:inputText value="#{saidaMB.cdCartao}" />
+								<p:commandButton action="#{saidaMB.buscarFechamento()}" style="display: none;" 
+									update="@form" />
 							</p:outputLabel>
-						</p:column>
-						<p:column>
-							<p:commandButton value="Buscar" styleClass="button-search" />
 						</p:column>
 					</p:panelGrid>
 				</div>
@@ -34,36 +33,54 @@
 
 			<div class="divisor" />
 			
-			<p:panelGrid>
-				<p:dataTable value="#{saidaMB.lstSaida}" var="saida"
+			<p:panelGrid columns="1">
+				<p:dataTable value="#{saidaMB.lstFechamento}" var="saida"
 					emptyMessage="Nenhum registro encontrado." rendered="#{saidaMB.lstSaida.size() > 0}">
 					<p:column headerText="Data da Venda">
 						<h:outputText value="#{saida.dtSaida}" >
 							<f:convertDateTime pattern="dd/MM/YY - HH:mm" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Nome">
-						<h:outputText value="#{saida.produto.nome}" />
-					</p:column>
-					<p:column headerText="Valor">
-						<h:outputText value="#{saida.vlVenda}" />
-					</p:column>
-					<p:column headerText="Quantidade">
-						<h:outputText value="#{saida.qntSaida}" />
-					</p:column>
 					<p:column headerText="Pessoa">
 						<h:outputText value="#{saida.pessoa.pessoaFisica.nome}" />
 					</p:column>
-					<p:column headerText="Ações">
-						<p:commandLink styleClass="ui-icon ui-icon-close"
-						 	title="Excluir Venda"
-							action="#{saidaMB.excluir()}" >
-							<f:setPropertyActionListener value="#{saida}"
-								target="#{saidaMB.saida}" />
-						</p:commandLink>
+					<p:column headerText="Nome do Produto" style="text-align: center;">
+						<h:outputText value="#{saida.produto.nome}" />
+					</p:column>
+					<p:column headerText="Quantidade" style="text-align: right;">
+						<h:outputText value="#{saida.qntSaida}" >
+							<f:convertNumber integerOnly="true" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Valor" style="text-align: right;">
+						<h:outputText value="#{saida.vlVenda.multiply(saida.qntSaida)}" >
+							<f:convertNumber minFractionDigits="2" />
+						</h:outputText>
 					</p:column>
 				</p:dataTable>
 			</p:panelGrid>
+			<p:panelGrid columns="1" style="margin: auto; width:98%; text-align: right;">
+				<p:column>
+					<h:outputText value="Total a pagar " />
+				</p:column>
+				<p:column >
+					<b>
+						<h:outputText value="#{saidaMB.totalFechamento()}" >
+							<f:convertNumber minFractionDigits="2" />
+						</h:outputText>
+					</b>
+				</p:column>
+			</p:panelGrid>
+			<div class="rows">
+				<div class="space">
+					<p:panelGrid>
+						<p:column>
+							<p:commandButton value="Fechar Conta" 
+								styleClass="button-cadastro"/>
+						</p:column>
+					</p:panelGrid>
+				</div>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

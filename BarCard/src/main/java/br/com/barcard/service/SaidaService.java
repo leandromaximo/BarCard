@@ -1,6 +1,7 @@
 package br.com.barcard.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -62,6 +63,10 @@ public class SaidaService extends AbstService{
 	public Collection<Saida> outraRegraDeNegocioEspecificaBuscar(Saida s) {
 		//regraDeNegocioAqui
 		return saidaDAO.aquiUmaQuerieEspecifica("",null);
+	}
+	
+	public List<Saida> buscarPorCodigoCartao(String codigo){
+		return saidaDAO.buscarPorCodigoCartao(codigo);
 	}
 	
 }

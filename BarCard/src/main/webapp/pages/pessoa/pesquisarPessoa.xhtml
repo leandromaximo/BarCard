@@ -19,7 +19,7 @@
 				action="#{pessoaMB.goTo('cadastrarPessoa')}" />
 		</div>
 
-		<h:form id="idForm">
+		<h:form id="idForm" >
 			 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 		        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 		        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
@@ -42,7 +42,7 @@
 
 			<div class="divisor" />
 
-			<p:panelGrid>
+			<p:panelGrid columns="1">
 				<p:dataTable value="#{pessoaMB.listPessoa}" var="pessoa"
 					emptyMessage="Nenhum registro encontrado.">
 					<p:column headerText="Nome">

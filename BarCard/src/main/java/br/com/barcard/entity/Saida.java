@@ -42,6 +42,10 @@ public class Saida implements ItfEntidade{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DT_SAIDA", nullable=false)
 	private Date dtSaida;
+	
+	@NotNull
+	@Column(name = "ST_ATIVO", nullable=false, columnDefinition="boolean default true")
+	private Boolean stAtivo;
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -63,14 +67,6 @@ public class Saida implements ItfEntidade{
 	
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Produto getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
 	}
 
 	public BigDecimal getVlVenda() {
@@ -97,6 +93,22 @@ public class Saida implements ItfEntidade{
 		this.dtSaida = dtSaida;
 	}
 
+	public Boolean getStAtivo() {
+		return stAtivo;
+	}
+
+	public void setStAtivo(Boolean stAtivo) {
+		this.stAtivo = stAtivo;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+	
 	public Pessoa getPessoa() {
 		return pessoa;
 	}

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,6 +43,7 @@ public class SaidaMB extends GenericMB {
 	Collection<Produto> lstProduto = new ArrayList<Produto>();
 	BigDecimal inicial = BigDecimal.ONE;
 	String cdCartao = new String();
+	Collection<Saida> lstFechamento = new ArrayList<Saida>();
 	
 	@PostConstruct
 	public void init(){
@@ -104,6 +104,18 @@ public class SaidaMB extends GenericMB {
 		return listQnt;
 	}
 	
+	public BigDecimal totalFechamento(){
+		BigDecimal total = BigDecimal.ZERO;
+		for (Saida saida : lstFechamento) {
+			total = total.add(saida.getQntSaida().multiply(saida.getVlVenda()));
+		}
+		return total;
+	}
+	
+	public void buscarFechamento(){
+		lstFechamento = saidaService.buscarPorCodigoCartao(cdCartao);
+	}
+	
 	public Conversation getConversation() {
 		return conversation;
 	}
@@ -146,6 +158,14 @@ public class SaidaMB extends GenericMB {
 
 	public void setCdCartao(String cdCartao) {
 		this.cdCartao = cdCartao;
+	}
+
+	public Collection<Saida> getLstFechamento() {
+		return lstFechamento;
+	}
+
+	public void setLstFechamento(Collection<Saida> lstFechamento) {
+		this.lstFechamento = lstFechamento;
 	}
 	
 }

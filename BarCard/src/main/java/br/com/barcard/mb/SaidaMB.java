@@ -128,22 +128,24 @@ public class SaidaMB extends GenericMB {
 	
 	public BigDecimal totalFechamento(){
 		BigDecimal total = BigDecimal.ZERO;
-		for (Saida saida : pessoa.getLstSaida()) {
+		for (Saida saida : lstFechamento) {
 			total = total.add(saida.getQntSaida().multiply(saida.getVlVenda()));
 		}
 		return total;
 	}
 	
 	public String fechaConta(){
-		if(pessoa.getLstSaida().size()>0){
+		if(lstFechamento.size()>0){
+			Pessoa pessoa = ((List<Saida>)lstFechamento).get(0).getPessoa();
 			Cartao cartao = pessoa.getCartao();
 			pessoa.setCartao(null);
-			for (Saida saida : pessoa.getLstSaida()) {
+			for (Saida saida : lstFechamento) {
 				saida.setStAtivo(false);
 				saidaService.alterar(saida);
 			}
 			pessoaService.alterar(pessoa);
 			cartaoService.excluir(cartao);
+			lstFechamento = new ArrayList<Saida>();
 		}else{
 			addMessageErro("Passe o Cartão.");
 		}
@@ -154,6 +156,7 @@ public class SaidaMB extends GenericMB {
 		if(!cdCartao.equals("")){
 			Pessoa pessoa = pessoaService.buscarPorCodigoCartao(cdCartao);
 			if(pessoa!=null){
+				lstFechamento = new ArrayList<Saida>();
 				for (Saida saida : pessoa.getLstSaida()) {
 					if(saida.getStAtivo()){
 						lstFechamento.add(saida);

@@ -53,7 +53,7 @@ public class Saida implements ItfEntidade{
 	private Produto produto;
 	
 	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_PESSOA", nullable=false)
 	private Pessoa pessoa;
 	

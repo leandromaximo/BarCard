@@ -26,7 +26,7 @@ public class ProdutoDAO extends AbstDAO<Produto>	{
 		return null;
 	}
 	
-	public List<Produto> buscarPorNome(String nome){
+	public Collection<Produto> buscarPorNome(String nome){
 		try {
 			StringBuilder sql = new StringBuilder("from Produto ");
 			sql.append(" where nome like '%");

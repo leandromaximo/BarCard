@@ -1,6 +1,7 @@
 package br.com.barcard.entity;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,13 +45,12 @@ public class Pessoa implements ItfEntidade{
 	
 	@JoinColumn(name = "ID_CARTAO", nullable=true)
 	@Cascade(CascadeType.ALL)
-	@OneToOne(fetch=FetchType.EAGER)
+	@OneToOne(fetch=FetchType.LAZY)
 	private Cartao cartao = new Cartao();
 	
 	@Fetch(value = FetchMode.SUBSELECT)
-	@Cascade(CascadeType.ALL)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pessoa")
-	private List<Saida> lstSaida;
+	private Collection<Saida> lstSaida = new ArrayList<Saida>();
 
 	public Pessoa(){
 		
@@ -88,11 +88,11 @@ public class Pessoa implements ItfEntidade{
 		this.cartao = cartao;
 	}
 
-	public List<Saida> getLstSaida() {
+	public Collection<Saida> getLstSaida() {
 		return lstSaida;
 	}
 
-	public void setLstSaida(List<Saida> lstSaida) {
+	public void setLstSaida(Collection<Saida> lstSaida) {
 		this.lstSaida = lstSaida;
 	}
 	

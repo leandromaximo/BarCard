@@ -1,7 +1,7 @@
 package br.com.barcard.entity;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,12 +50,11 @@ public class Produto implements ItfEntidade{
 	@Fetch(value = FetchMode.SUBSELECT)
 	@Cascade(CascadeType.ALL)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto")
-	private List<Entrada> lstEntrada;
+	private Collection<Entrada> lstEntrada;
 	
 	@Fetch(value = FetchMode.SUBSELECT)
-	@Cascade(CascadeType.ALL)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto")
-	private List<Saida> lstSaida;
+	private Collection<Saida> lstSaida;
 	
 	@Transient
 	private BigDecimal qntEstoque;
@@ -104,19 +103,19 @@ public class Produto implements ItfEntidade{
 		this.caminhoImagem = caminhoImagem;
 	}
 
-	public List<Entrada> getLstEntrada() {
+	public Collection<Entrada> getLstEntrada() {
 		return lstEntrada;
 	}
 
-	public void setLstEntrada(List<Entrada> lstEntrada) {
+	public void setLstEntrada(Collection<Entrada> lstEntrada) {
 		this.lstEntrada = lstEntrada;
 	}
 
-	public List<Saida> getLstSaida() {
+	public Collection<Saida> getLstSaida() {
 		return lstSaida;
 	}
 
-	public void setLstSaida(List<Saida> lstSaida) {
+	public void setLstSaida(Collection<Saida> lstSaida) {
 		this.lstSaida = lstSaida;
 	}
 

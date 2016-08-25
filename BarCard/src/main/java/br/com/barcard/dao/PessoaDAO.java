@@ -42,7 +42,7 @@ public class PessoaDAO extends AbstDAO	{
 		return null;
 	}
 	
-	public List<Pessoa> buscarPorNome(String nome){
+	public Collection<Pessoa> buscarPorNome(String nome){
 		try {
 			StringBuilder sql = new StringBuilder("from Pessoa ");
 			sql.append(" where pessoaFisica.nome like '%");

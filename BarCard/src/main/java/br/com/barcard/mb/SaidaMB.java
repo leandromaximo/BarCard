@@ -50,6 +50,7 @@ public class SaidaMB extends GenericMB {
 	BigDecimal inicial = BigDecimal.ONE;
 	String cdCartao = new String();
 	Collection<Saida> lstFechamento = new ArrayList<Saida>();
+	Pessoa pessoa = new Pessoa();
 	
 	@PostConstruct
 	public void init(){
@@ -127,18 +128,17 @@ public class SaidaMB extends GenericMB {
 	
 	public BigDecimal totalFechamento(){
 		BigDecimal total = BigDecimal.ZERO;
-		for (Saida saida : lstFechamento) {
+		for (Saida saida : pessoa.getLstSaida()) {
 			total = total.add(saida.getQntSaida().multiply(saida.getVlVenda()));
 		}
 		return total;
 	}
 	
 	public String fechaConta(){
-		if(lstFechamento.size()>0){
-			Pessoa pessoa = ((List<Saida>)lstFechamento).get(0).getPessoa();
+		if(pessoa.getLstSaida().size()>0){
 			Cartao cartao = pessoa.getCartao();
 			pessoa.setCartao(null);
-			for (Saida saida : lstFechamento) {
+			for (Saida saida : pessoa.getLstSaida()) {
 				saida.setStAtivo(false);
 				saidaService.alterar(saida);
 			}
@@ -152,9 +152,13 @@ public class SaidaMB extends GenericMB {
 	
 	public String buscarFechamento(){
 		if(!cdCartao.equals("")){
-			Cartao cartao = cartaoService.buscarPorCodigo(cdCartao);
-			if(cartao!=null){
-				lstFechamento = saidaService.buscarPorCodigoCartao(cdCartao);
+			Pessoa pessoa = pessoaService.buscarPorCodigoCartao(cdCartao);
+			if(pessoa!=null){
+				for (Saida saida : pessoa.getLstSaida()) {
+					if(saida.getStAtivo()){
+						lstFechamento.add(saida);
+					}
+				}
 			}else{
 				addMessageErro("Cartão não cadastrado.");
 			}
@@ -215,6 +219,14 @@ public class SaidaMB extends GenericMB {
 
 	public void setLstFechamento(Collection<Saida> lstFechamento) {
 		this.lstFechamento = lstFechamento;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 	
 }

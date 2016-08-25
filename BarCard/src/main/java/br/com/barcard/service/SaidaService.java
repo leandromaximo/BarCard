@@ -1,7 +1,6 @@
 package br.com.barcard.service;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -51,6 +50,10 @@ public class SaidaService extends AbstService{
 		}
 	}
 	
+	public void refresh(Saida s){
+		saidaDAO.refresh(s);
+	}
+	
 	
 	public Collection<Saida> regraDeNegocioBuscar(Saida s) {
 		//regraDeNegocioAqui
@@ -67,12 +70,12 @@ public class SaidaService extends AbstService{
 		return saidaDAO.aquiUmaQuerieEspecifica("",null);
 	}
 	
-	public List<Saida> buscarPorCodigoCartao(String codigo){
+	public Collection<Saida> buscarPorCodigoCartao(String codigo){
 		return saidaDAO.buscarPorCodigoCartao(codigo);
 	}
 	
-	public List<Saida> findAllByProperty() throws Exception{
-		return (List<Saida>) saidaDAO.findAllByProperty(Saida.class,"stAtivo",true,Order.desc("id"));
+	public Collection<Saida> findAllByProperty() throws Exception{
+		return saidaDAO.findAllByProperty(Saida.class,"stAtivo",true,Order.desc("id"));
 	}
 	
 }

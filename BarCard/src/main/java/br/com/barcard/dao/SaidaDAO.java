@@ -26,7 +26,7 @@ public class SaidaDAO extends AbstDAO	{
 		return null;
 	}
 	
-	public List<Saida> buscarPorCodigoCartao(String codigo){
+	public Collection<Saida> buscarPorCodigoCartao(String codigo){
 		try {
 			StringBuilder sql = new StringBuilder("from Saida ");
 			sql.append(" where pessoa.cartao.cdCartao = :codigo");

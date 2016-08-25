@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:pe="http://primefaces.org/ui/extensions"
-	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui">
+	template="/layout/templateAdmin.xhtml" xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="centro">
 		<!-- INICIALIZA A CONVERSACAO -->
@@ -80,10 +80,40 @@
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{produtoMB.produto}" />
 						</p:commandLink>
+						<p:commandLink styleClass="ui-icon ui-icon-image" update=":addImgModal"
+						 	title="Adicionar Imagem" oncomplete="PF('adicionaImagem').show()">
+							<f:setPropertyActionListener value="#{produto}"
+								target="#{produtoMB.produto}" />
+						</p:commandLink>
 					</p:column>
 				</p:dataTable>
 			</p:panelGrid>
 		</h:form>
+		
+		<p:dialog id="addImgModal" header="Adicionar Imagem no Produto #{produtoMB.entrada.produto.nome}" modal="true"
+			widgetVar="adicionaImagem" appendTo="@(body)">
+			<h:form>
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Caminho da Imagem: *">
+								<p:inputText value="#{produtoMB.produto.caminhoImagem}" size="40"/>
+							</p:outputLabel>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<div class="rows">
+					<div class="space">
+						<p:panelGrid>
+							<p:column>
+								<p:commandButton value="Salvar"
+									action="#{produtoMB.salvar()}" oncomplete="PF('adicionaImagem').hide())" />
+							</p:column>
+						</p:panelGrid>
+					</div>
+				</div>
+			</h:form>
+		</p:dialog>
 		
 		<p:dialog id="addProdModal" header="Adicionar Produto #{produtoMB.entrada.produto.nome}" modal="true"
 			widgetVar="adicionaProduto" appendTo="@(body)">

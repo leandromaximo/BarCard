@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Bar Card</title>
+
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/resources/css/style.css"
+		rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/resources/script/principal.js" />
+
+</h:head>
+<h:body>
+	<ui:include src="ajaxload.xhtml" />
+	<div align="center">
+		<p:layout style="width:100%;min-height:800px">
+			<p:layoutUnit position="north" size="100">
+				<div align="center">
+					<h:graphicImage height="79" library="images" name="topo.png" />
+				</div>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="west" size="220">
+				<ui:include src="/layout/menuAdmin.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+				<div align="left">
+					<ui:insert name="centro">
+						
+					</ui:insert>
+				</div>
+			</p:layoutUnit>
+
+			<!-- <p:layoutUnit position="south">
+				<ui:insert name="rodape">
+                    		Bar Card Since 2016
+                </ui:insert>
+			</p:layoutUnit> -->
+		</p:layout>
+	</div>
+</h:body>
+</html>

@@ -48,7 +48,7 @@ public class PessoaDAO extends AbstDAO	{
 			sql.append(" where pessoaFisica.nome like '%");
 			sql.append(nome);
 			sql.append("%'");
-			sql.append("order by nome");
+			sql.append(" order by pessoaFisica.nome");
 
 			Query q = getEntityManager().createQuery(sql.toString());
 			

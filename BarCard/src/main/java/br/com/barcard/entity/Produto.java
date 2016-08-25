@@ -44,6 +44,9 @@ public class Produto implements ItfEntidade{
 	@Column(name="VL_VENDA", nullable=false)
 	private BigDecimal vlVenda;
 	
+	@Column(name="CAMINHO_IMAGEM", nullable=true, length=200)
+	private String caminhoImagem;
+	
 	@Fetch(value = FetchMode.SUBSELECT)
 	@Cascade(CascadeType.ALL)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto")
@@ -91,6 +94,14 @@ public class Produto implements ItfEntidade{
 
 	public void setVlVenda(BigDecimal vlVenda) {
 		this.vlVenda = vlVenda;
+	}
+
+	public String getCaminhoImagem() {
+		return caminhoImagem;
+	}
+
+	public void setCaminhoImagem(String caminhoImagem) {
+		this.caminhoImagem = caminhoImagem;
 	}
 
 	public List<Entrada> getLstEntrada() {

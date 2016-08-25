@@ -16,26 +16,7 @@
 		</div>
 
 		<h:form id="idForm">
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-		        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-		        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-		    </p:confirmDialog>
 			<p:growl id="messages"/>
-			<div class="rows">
-				<div class="space">
-					<p:panelGrid >
-						<p:column>
-							<p:outputLabel value="Cartão: ">
-								<p:inputText value="#{saidaMB.cdCartao}" />
-								<p:commandButton action="#{saidaMB.buscarFechamento()}" style="display: none;" 
-									update="@form" />
-							</p:outputLabel>
-						</p:column>
-					</p:panelGrid>
-				</div>
-			</div>
-
-			<div class="divisor" />
 			
 			<p:panelGrid columns="1">
 				<p:dataTable value="#{saidaMB.lstFechamento}" var="saida"

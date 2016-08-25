@@ -13,6 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.hibernate.criterion.Order;
+
 import br.com.barcard.entity.Cartao;
 import br.com.barcard.entity.Pessoa;
 import br.com.barcard.entity.Produto;
@@ -56,7 +58,7 @@ public class SaidaMB extends GenericMB {
 	public void init(){
 		try {
 			saida.setQntSaida(BigDecimal.ONE);
-			lstSaida  = saidaService.findAllByProperty();
+			lstSaida  = saidaService.findAllByProperty("stFechamento",false,Order.desc("id"));
 			lstProduto  = produtoService.outraRegraDeNegocioEspecificaBuscar(null);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +87,7 @@ public class SaidaMB extends GenericMB {
 						saida.setPessoa(pessoa);
 						saida.setDtSaida(new Date());
 						saida.setVlVenda(saida.getProduto().getVlVenda());
-						saida.setStAtivo(true);
+						saida.setStFechamento(false);
 						saidaService.salvar(saida);
 						endConversation();
 						return goTo("cadastrarVenda");
@@ -140,7 +142,8 @@ public class SaidaMB extends GenericMB {
 			Cartao cartao = pessoa.getCartao();
 			pessoa.setCartao(null);
 			for (Saida saida : lstFechamento) {
-				saida.setStAtivo(false);
+				saida.setStFechamento(true);
+				saida.setDtFechamento(new Date());
 				saidaService.alterar(saida);
 			}
 			pessoaService.alterar(pessoa);
@@ -158,7 +161,7 @@ public class SaidaMB extends GenericMB {
 			if(pessoa!=null){
 				lstFechamento = new ArrayList<Saida>();
 				for (Saida saida : pessoa.getLstSaida()) {
-					if(saida.getStAtivo()){
+					if(!saida.getStFechamento()){
 						lstFechamento.add(saida);
 					}
 				}
@@ -170,6 +173,52 @@ public class SaidaMB extends GenericMB {
 		}
 		cdCartao =  new String();
 		return goTo("fechamento");
+	}
+	
+	public Collection<Pessoa> relatorioFechamentoPago() throws Exception{
+		Collection<Pessoa> lstPessoa = pessoaService.buscarPorVendaAtivaInativa(true);
+		for (Pessoa pessoa : lstPessoa) {
+			Collection<Saida> lstSaida = new ArrayList<Saida>();
+			for (Saida saida : saidaService.findAllByProperty("pessoa", pessoa, Order.asc("dtSaida"))) {
+				if(saida.getStFechamento()){
+					lstSaida.add(saida);
+				}
+			}
+			pessoa.getLstSaida().clear();
+			pessoa.setLstSaida(lstSaida);
+		}
+		return lstPessoa;
+	}
+	
+	public Collection<Pessoa> relatorioFechamentoAPagar() throws Exception{
+		Collection<Pessoa> lstPessoa = pessoaService.buscarPorVendaAtivaInativa(false);
+		for (Pessoa pessoa : lstPessoa) {
+			Collection<Saida> lstSaida = new ArrayList<Saida>();
+			for (Saida saida : saidaService.findAllByProperty("pessoa", pessoa, Order.asc("dtSaida"))) {
+				if(!saida.getStFechamento()){
+					lstSaida.add(saida);
+				}
+			}
+			pessoa.getLstSaida().clear();
+			pessoa.setLstSaida(lstSaida);
+		}
+		return lstPessoa;
+	}
+	
+	public BigDecimal totalPago(Collection<Saida> lstSaida){
+		BigDecimal tot = BigDecimal.ZERO;
+		for (Saida saida : lstSaida) {
+			tot = tot.add(saida.getVlVenda().multiply(saida.getQntSaida()));
+		}
+		return tot;
+	}
+	
+	public BigDecimal totalAPagar(Collection<Saida> lstSaida){
+		BigDecimal tot = BigDecimal.ZERO;
+		for (Saida saida : lstSaida) {
+			tot = tot.add(saida.getVlVenda().multiply(saida.getQntSaida()));
+		}
+		return tot;
 	}
 	
 	public Conversation getConversation() {
@@ -231,5 +280,5 @@ public class SaidaMB extends GenericMB {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+
 }

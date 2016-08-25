@@ -4,8 +4,11 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
+import org.hibernate.criterion.Order;
+
 import br.com.barcard.dao.PessoaDAO;
 import br.com.barcard.entity.Pessoa;
+import br.com.barcard.entity.Saida;
 import br.com.barcard.generic.service.AbstService;
 
 public class PessoaService extends AbstService{
@@ -71,4 +74,11 @@ public class PessoaService extends AbstService{
 		return pessoaDAO.buscarPorNome(nome);
 	}
 	
+	public Collection<Pessoa> findAllByProperty(String propriedade,Object valor,Order orderBy) throws Exception{
+		return pessoaDAO.findAllByProperty(Pessoa.class,"propriedade",valor,orderBy);
+	}
+	
+	public Collection<Pessoa> buscarPorVendaAtivaInativa(Boolean stFechamento){
+		return pessoaDAO.buscarPorVendaAtivaInativa(stFechamento);
+	}
 }

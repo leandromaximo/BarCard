@@ -1,7 +1,6 @@
 package br.com.barcard.dao;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.Query;
 
@@ -30,12 +29,12 @@ public class SaidaDAO extends AbstDAO	{
 		try {
 			StringBuilder sql = new StringBuilder("from Saida ");
 			sql.append(" where pessoa.cartao.cdCartao = :codigo");
-			sql.append(" and stAtivo = :stAtivo");
+			sql.append(" and stFechamento= :stFechamento");
 
 			Query q = getEntityManager().createQuery(sql.toString());
 			
 			q.setParameter("codigo", codigo);
-			q.setParameter("stAtivo", true);
+			q.setParameter("stFechamento", false);
 			
 			return q.getResultList();
 		} catch (Exception e) {

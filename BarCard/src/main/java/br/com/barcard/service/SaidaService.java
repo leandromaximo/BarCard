@@ -74,8 +74,8 @@ public class SaidaService extends AbstService{
 		return saidaDAO.buscarPorCodigoCartao(codigo);
 	}
 	
-	public Collection<Saida> findAllByProperty() throws Exception{
-		return saidaDAO.findAllByProperty(Saida.class,"stAtivo",true,Order.desc("id"));
+	public Collection<Saida> findAllByProperty(String propriedade,Object valor,Order orderBy) throws Exception{
+		return saidaDAO.findAllByProperty(Saida.class,propriedade,valor,orderBy);
 	}
 	
 }

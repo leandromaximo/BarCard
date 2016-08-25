@@ -44,8 +44,12 @@ public class Saida implements ItfEntidade{
 	private Date dtSaida;
 	
 	@NotNull
-	@Column(name = "ST_ATIVO", nullable=false, columnDefinition="boolean default true")
-	private Boolean stAtivo;
+	@Column(name = "ST_FECHAMENTO", nullable=false, columnDefinition="boolean default false")
+	private Boolean stFechamento;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DT_FECHAMENTO", nullable=true)
+	private Date dtFechamento;
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -93,12 +97,20 @@ public class Saida implements ItfEntidade{
 		this.dtSaida = dtSaida;
 	}
 
-	public Boolean getStAtivo() {
-		return stAtivo;
+	public Boolean getStFechamento() {
+		return stFechamento;
 	}
 
-	public void setStAtivo(Boolean stAtivo) {
-		this.stAtivo = stAtivo;
+	public void setStFechamento(Boolean stFechamento) {
+		this.stFechamento = stFechamento;
+	}
+
+	public Date getDtFechamento() {
+		return dtFechamento;
+	}
+
+	public void setDtFechamento(Date dtFechamento) {
+		this.dtFechamento = dtFechamento;
 	}
 
 	public Produto getProduto() {

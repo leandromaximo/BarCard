@@ -1,5 +1,6 @@
 package br.com.barcard.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -59,4 +60,25 @@ public class PessoaDAO extends AbstDAO	{
 		}
 		return null;
 	}
+	
+	public Collection<Pessoa> buscarPorVendaAtivaInativa(Boolean stFechamento){
+		Collection<Pessoa> lst = new ArrayList<Pessoa>();
+		try {
+			StringBuilder sql = new StringBuilder("Select distinct p from Pessoa p ");
+			sql.append(" inner join p.lstSaida s ");
+			sql.append(" where s.stFechamento = :stFechamento");
+
+			Query q = getEntityManager().createQuery(sql.toString());
+			
+			q.setParameter("stFechamento", stFechamento);
+			
+			lst = q.getResultList();
+			
+			return lst;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

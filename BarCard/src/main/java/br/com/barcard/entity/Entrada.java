@@ -31,7 +31,7 @@ public class Entrada implements ItfEntidade{
 	private Long id;
 	
 	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_PRODUTO")
 	private Produto produto;
 	

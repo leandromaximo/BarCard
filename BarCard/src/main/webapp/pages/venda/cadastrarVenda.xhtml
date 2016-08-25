@@ -48,10 +48,9 @@
 				<p:panelGrid>
 					<p:row>
 						<p:column>
-							<p:selectOneMenu value="#{saidaMB.saida.qntSaida}">
-								<f:selectItem itemLabel="1" itemValue="#{saidaMB.inicial}" />
-								<f:selectItems value="#{saidaMB.listQnt()}" />
-							</p:selectOneMenu>
+							<p:inputText value="#{saidaMB.saida.qntSaida}" size="1">
+								<f:convertNumber integerOnly="true"/>
+							</p:inputText>
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -59,7 +58,7 @@
 					<div class="space">
 						<p:panelGrid>
 							<p:column>
-								<p:commandButton value="Passar Cartão" update="cartaoVendaModal"
+								<p:commandButton id="btnCartao" value="Passar Cartão" update="cartaoVendaModal"
 									oncomplete="PF('cartaoVenda').show()" />
 							</p:column>
 						</p:panelGrid>

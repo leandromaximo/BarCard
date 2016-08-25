@@ -54,6 +54,7 @@ public class SaidaMB extends GenericMB {
 	@PostConstruct
 	public void init(){
 		try {
+			saida.setQntSaida(BigDecimal.ONE);
 			lstSaida  = saidaService.findAllByProperty();
 			lstProduto  = produtoService.outraRegraDeNegocioEspecificaBuscar(null);
 		} catch (Exception e) {
@@ -79,23 +80,32 @@ public class SaidaMB extends GenericMB {
 			if(cdCartao!=null && !cdCartao.equals("")){
 				Pessoa pessoa = pessoaService.buscarPorCodigoCartao(cdCartao);
 				if(pessoa!=null && pessoa.getId()!=null){
-					saida.setPessoa(pessoa);
-					saida.setDtSaida(new Date());
-					saida.setVlVenda(saida.getProduto().getVlVenda());
-					saida.setStAtivo(true);
-					saidaService.salvar(saida);
-					endConversation();
-					return goTo("cadastrarVenda");
+					if(saida.getQntSaida().compareTo(BigDecimal.ZERO)>0){
+						saida.setPessoa(pessoa);
+						saida.setDtSaida(new Date());
+						saida.setVlVenda(saida.getProduto().getVlVenda());
+						saida.setStAtivo(true);
+						saidaService.salvar(saida);
+						endConversation();
+						return goTo("cadastrarVenda");
+					}else{
+						cdCartao = new String();
+						saida.setQntSaida(BigDecimal.ONE);
+						addMessageErro("A quantidade tem que ser maior que 0.");
+						return goTo("cadastrarVenda");
+					}
 				}else{
 					cdCartao = new String();
 					addMessageErro("Cartão não cadastrado.");
 					return goTo("cadastrarVenda");
 				}
 			}else{
+				cdCartao = new String();
 				addMessageErro("Passe o Cartão.");
 				return goTo("cadastrarVenda");
 			}
 		}else{
+			cdCartao = new String();
 			addMessageErro("Selecione um produto.");
 			return goTo("cadastrarVenda");
 		}

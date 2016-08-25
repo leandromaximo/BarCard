@@ -150,7 +150,7 @@ public class SaidaMB extends GenericMB {
 		return goTo("fechamento");
 	}
 	
-	public void buscarFechamento(){
+	public String buscarFechamento(){
 		if(!cdCartao.equals("")){
 			Cartao cartao = cartaoService.buscarPorCodigo(cdCartao);
 			if(cartao!=null){
@@ -162,6 +162,7 @@ public class SaidaMB extends GenericMB {
 			addMessageErro("Passe o Cartão.");
 		}
 		cdCartao =  new String();
+		return goTo("fechamento");
 	}
 	
 	public Conversation getConversation() {

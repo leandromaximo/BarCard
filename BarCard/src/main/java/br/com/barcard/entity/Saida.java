@@ -48,12 +48,12 @@ public class Saida implements ItfEntidade{
 	private Boolean stAtivo;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_PRODUTO", nullable=false)
 	private Produto produto;
 	
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_PESSOA", nullable=false)
 	private Pessoa pessoa;
 	

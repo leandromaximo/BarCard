@@ -24,11 +24,11 @@
 			<div class="rows">
 				<div class="space">
 					<p:panelGrid >
+						<p:focus context="idForm"/>
 						<p:column>
 							<p:outputLabel value="Cartão: ">
 								<p:inputText value="#{saidaMB.cdCartao}" />
-								<p:commandButton action="#{saidaMB.buscarFechamento()}" style="display: none;" 
-									update="@form" />
+								<p:commandButton action="#{saidaMB.buscarFechamento()}" style="display: none;"  />
 							</p:outputLabel>
 						</p:column>
 					</p:panelGrid>

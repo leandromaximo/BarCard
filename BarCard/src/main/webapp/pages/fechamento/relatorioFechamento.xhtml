@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/layout/templateAdmin.xhtml" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="centro">
+		<!-- INICIALIZA A CONVERSACAO -->
+		<f:event listener="#{saidaMB.initConversation()}" type="preRenderView" />
+
+		<div class="agrupadorTitulo">
+			<h1>Relatorio de Fechamento</h1>
+			<div class="full"></div>
+		</div>
+
+		<h:form id="idForm">
+			<div class="agrupadorTitulo">
+				<h1>A pagar</h1>
+				<div class="full"></div>
+			</div>
+			<p:panelGrid columns="1">
+				<p:dataTable value="#{saidaMB.relatorioFechamentoAPagar()}" var="pessoaPago"
+					emptyMessage="Nenhum registro encontrado."
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowsPerPageTemplate="10,20,30"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					
+					<p:column headerText="Pessoa">
+						<h:outputText value="#{pessoaPago.pessoaFisica.nome}" />
+					</p:column>
+					<p:column headerText="Total">
+						<h:outputText value="#{saidaMB.totalAPagar(pessoaPago.lstSaida)}" >
+							<f:convertNumber minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:panelGrid>
+			
+			<br/><br/><br/>
+			
+			<div class="agrupadorTitulo">
+				<h1>Pago</h1>
+				<div class="full"></div>
+			</div>
+			
+			<p:panelGrid columns="1">
+				<p:dataTable value="#{saidaMB.relatorioFechamentoPago()}" var="pessoaAPagar"
+					emptyMessage="Nenhum registro encontrado."
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowsPerPageTemplate="10,20,30"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					
+					<p:column headerText="Pessoa">
+						<h:outputText value="#{pessoaAPagar.pessoaFisica.nome}" />
+					</p:column>
+					<p:column headerText="Total">
+						<h:outputText value="#{saidaMB.totalPago(pessoaAPagar.lstSaida)}" >
+							<f:convertNumber minFractionDigits="2"/>
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 25-Ago-2016 às 15:43
+-- Generation Time: 25-Ago-2016 às 16:08
 -- Versão do servidor: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -36,7 +36,7 @@ CREATE TABLE `cartao` (
 --
 
 INSERT INTO `cartao` (`ID_CARTAO`, `CD_CARTAO`) VALUES
-(14, '0008101901');
+(15, '0008101901');
 
 -- --------------------------------------------------------
 
@@ -265,7 +265,7 @@ INSERT INTO `pessoa` (`ID_PESSOA`, `ID_PESSOA_FISICA`, `NR_TELEFONE`, `ID_CARTAO
 (184, 182, '0000000000', NULL),
 (185, 183, '0000000000', NULL),
 (186, 184, '0000000000', NULL),
-(188, 186, '0000000000', 14);
+(188, 186, '0000000000', 15);
 
 -- --------------------------------------------------------
 
@@ -512,6 +512,15 @@ CREATE TABLE `saida` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Extraindo dados da tabela `saida`
+--
+
+INSERT INTO `saida` (`ID_SAIDA`, `DT_SAIDA`, `NR_QUANTIDADE`, `VL_SAIDA`, `ID_PESSOA`, `ID_PRODUTO`, `ST_ATIVO`) VALUES
+(10, '2016-08-25 10:49:51', '1.00', '1.00', 188, 18, 0),
+(11, '2016-08-25 10:57:01', '1.00', '1.00', 188, 18, 1),
+(12, '2016-08-25 11:02:44', '1.00', '1.00', 188, 18, 1);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -565,7 +574,7 @@ ALTER TABLE `saida`
 -- AUTO_INCREMENT for table `cartao`
 --
 ALTER TABLE `cartao`
-  MODIFY `ID_CARTAO` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID_CARTAO` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `entrada`
 --
@@ -590,7 +599,7 @@ ALTER TABLE `produto`
 -- AUTO_INCREMENT for table `saida`
 --
 ALTER TABLE `saida`
-  MODIFY `ID_SAIDA` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID_SAIDA` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- Constraints for dumped tables
 --

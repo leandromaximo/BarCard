@@ -16,7 +16,6 @@ import br.com.barcard.util.SystemUtil;
 public class ProdutoConverter implements Converter {
 	
  
-    @Override  
     public Object getAsObject(FacesContext context, UIComponent component, String value)  {  
     	 Produto retorno = null;
     	 if (value != null && value.trim().equals("")) {  
@@ -32,7 +31,6 @@ public class ProdutoConverter implements Converter {
          return retorno;  
     }  
   
-    @Override  
     public String getAsString(FacesContext context, UIComponent component, Object value) {  
 	   String retorno = ""; 
     	try {

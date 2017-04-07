@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
+import org.hibernate.criterion.Order;
 import br.com.barcard.dao.ProdutoDAO;
 import br.com.barcard.entity.Produto;
 import br.com.barcard.generic.service.AbstService;
@@ -70,5 +71,9 @@ public class ProdutoService extends AbstService{
 	
 	public Collection<Produto> buscarPorNome(String nome){
 		return produtoDAO.buscarPorNome(nome);
+	}
+	
+	public Collection<Produto> findAll(Order orderBy) throws Exception{
+		return produtoDAO.findAll(Produto.class,orderBy);
 	}
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
@@ -82,6 +83,8 @@ public class ProdutoMB  extends GenericMB {
 		if(entrada.getQuantidade()!=null && entrada.getQuantidade().compareTo(BigDecimal.ZERO)>0 &&
 				entrada.getVlCusto()!=null && entrada.getVlCusto().compareTo(BigDecimal.ZERO)>0){
 			if(entrada.getProduto()!=null && entrada.getProduto().getId()!=null){
+				TimeZone tz = TimeZone.getTimeZone("America/Sao_Paulo");
+				TimeZone.setDefault(tz);
 				entrada.setDtEntrada(new Date());
 				entradaService.salvar(entrada);
 			}

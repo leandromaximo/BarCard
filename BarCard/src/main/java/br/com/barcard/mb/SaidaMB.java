@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
@@ -57,9 +58,10 @@ public class SaidaMB extends GenericMB {
 	@PostConstruct
 	public void init(){
 		try {
+			lstSaida = new ArrayList<Saida>();
 			saida.setQntSaida(BigDecimal.ONE);
 			lstSaida  = saidaService.findAllByProperty("stFechamento",false,Order.desc("id"));
-			lstProduto  = produtoService.outraRegraDeNegocioEspecificaBuscar(null);
+			lstProduto  = produtoService.findAll(Order.asc("id"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,6 +87,8 @@ public class SaidaMB extends GenericMB {
 				if(pessoa!=null && pessoa.getId()!=null){
 					if(saida.getQntSaida().compareTo(BigDecimal.ZERO)>0){
 						saida.setPessoa(pessoa);
+						TimeZone tz = TimeZone.getTimeZone("America/Sao_Paulo");
+						TimeZone.setDefault(tz);
 						saida.setDtSaida(new Date());
 						saida.setVlVenda(saida.getProduto().getVlVenda());
 						saida.setStFechamento(false);
@@ -143,6 +147,8 @@ public class SaidaMB extends GenericMB {
 			pessoa.setCartao(null);
 			for (Saida saida : lstFechamento) {
 				saida.setStFechamento(true);
+				TimeZone tz = TimeZone.getTimeZone("America/Sao_Paulo");
+				TimeZone.setDefault(tz);
 				saida.setDtFechamento(new Date());
 				saidaService.alterar(saida);
 			}
@@ -173,6 +179,26 @@ public class SaidaMB extends GenericMB {
 		}
 		cdCartao =  new String();
 		return goTo("fechamento");
+	}
+	
+	public String consultarCartao(){
+		if(!cdCartao.equals("")){
+			Pessoa pessoa = pessoaService.buscarPorCodigoCartao(cdCartao);
+			if(pessoa!=null){
+				lstFechamento = new ArrayList<Saida>();
+				for (Saida saida : pessoa.getLstSaida()) {
+					if(!saida.getStFechamento()){
+						lstFechamento.add(saida);
+					}
+				}
+			}else{
+				addMessageErro("Cartão não cadastrado.");
+			}
+		}else{
+			addMessageErro("Passe o Cartão.");
+		}
+		cdCartao =  new String();
+		return goTo("consultarCartao");
 	}
 	
 	public Collection<Pessoa> relatorioFechamentoPago() throws Exception{

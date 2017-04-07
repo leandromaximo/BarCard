@@ -13,11 +13,11 @@
 
 		<h:form id="idForm">
 			<p:growl id="messages" />
-			<p:dataGrid var="produto" value="#{saidaMB.lstProduto}" columns="7"
-				layout="grid" rows="14" paginator="true"
-				rowsPerPageTemplate="7,14,21"
+			<p:dataGrid var="produto" value="#{saidaMB.lstProduto}" columns="6"
+				layout="grid" rows="12" paginator="true"
+				rowsPerPageTemplate="6,12,18" paginatorPosition="bottom"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-				<p:panel header="#{produto.nome}">
+				<p:panel header="#{produto.descricao}">
 					<h:panelGrid columns="1"
 						style="margin: auto; width:50%; padding: 1px;">
 						<p:commandLink update=":vendaProdModal"
@@ -26,8 +26,13 @@
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{saidaMB.saida.produto}" />
 						</p:commandLink>
-						<h:outputText value="#{produto.descricao}" />
-						<h:outputText value="Valor: R$ #{produto.vlVenda}" />
+						<b>
+							<h1>
+								<h:outputText value="#{produto.nome}" style="font-style: bold; text-align: left; text-transform: uppercase; color: red;"/>
+							</h1>
+						</b>
+						<br/>
+						<p:outputLabel value="Valor: R$ #{produto.vlVenda}" />
 						<p:row>
 							<p:outputLabel value="Estoque:" style="margin: auto; width:35%;" />
 							<p:spacer width="100" height="1" />

@@ -24,8 +24,8 @@
 			<p:panelGrid columns="1">
 				<p:dataTable value="#{saidaMB.lstSaida}" var="saida"
 					emptyMessage="Nenhum registro encontrado."
-					rows="10" paginator="true"
-					rowsPerPageTemplate="10,20,30"
+					rows="100" paginator="true"
+					rowsPerPageTemplate="50,100,150"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 					<p:column headerText="Data da Venda">
 						<h:outputText value="#{saida.dtSaida}" >

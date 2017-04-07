@@ -1,0 +1,79 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/layout/template.xhtml" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="centro">
+		<!-- INICIALIZA A CONVERSACAO -->
+		<f:event listener="#{saidaMB.initConversation()}" type="preRenderView" />
+
+		<div class="agrupadorTitulo">
+			<h1>Consultar Cartão</h1>
+			<div class="full"></div>
+		</div>
+
+		<h:form id="idForm">
+			<p:growl id="messages"/>
+			<div class="rows">
+				<div class="space">
+					<p:panelGrid >
+						<p:focus context="idForm"/>
+						<p:column>
+							<p:outputLabel value="Cartão: ">
+								<p:inputText value="#{saidaMB.cdCartao}" />
+								<p:commandButton action="#{saidaMB.consultarCartao()}" style="display: none;"  />
+							</p:outputLabel>
+						</p:column>
+					</p:panelGrid>
+				</div>
+			</div>
+
+			<div class="divisor" />
+			
+			<p:panelGrid columns="1">
+				<p:dataTable value="#{saidaMB.lstFechamento}" var="saida"
+					emptyMessage="Nenhum registro encontrado."
+					rows="10" paginator="true"
+					rowsPerPageTemplate="10,20,30"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<p:column headerText="Data da Venda">
+						<h:outputText value="#{saida.dtSaida}" >
+							<f:convertDateTime pattern="dd/MM/YY - HH:mm" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Pessoa">
+						<h:outputText value="#{saida.pessoa.pessoaFisica.nome}" />
+					</p:column>
+					<p:column headerText="Nome do Produto" style="text-align: center;">
+						<h:outputText value="#{saida.produto.nome}" />
+					</p:column>
+					<p:column headerText="Quantidade" style="text-align: right;">
+						<h:outputText value="#{saida.qntSaida}" >
+							<f:convertNumber integerOnly="true" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Valor" style="text-align: right;">
+						<h:outputText value="#{saida.vlVenda.multiply(saida.qntSaida)}" >
+							<f:convertNumber minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:panelGrid>
+			<p:panelGrid columns="1" style="margin: auto; width:98%; text-align: right;">
+				<p:column>
+					<h:outputText value="Total " />
+				</p:column>
+				<p:column >
+					<b>
+						<h:outputText value="#{saidaMB.totalFechamento()}" >
+							<f:convertNumber minFractionDigits="2" />
+						</h:outputText>
+					</b>
+				</p:column>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
